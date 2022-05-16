@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Music_2.Data.Entities
 {
-    public class Silde
+    public class Slide
     {
         public int Id { set; get; }
         public string Name { set; get; }

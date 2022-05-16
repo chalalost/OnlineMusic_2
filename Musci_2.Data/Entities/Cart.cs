@@ -19,6 +19,6 @@ namespace Music_2.Data.Entities
 
         public DateTime DateCreated { get; set; }
 
-        public User AppUser { get; set; }
+        public User User { get; set; }
     }
 }
