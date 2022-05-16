@@ -10,7 +10,7 @@ using Music_2.Data.EF;
 namespace Music_2.Data.Migrations
 {
     [DbContext(typeof(OnlineMusicDbContext))]
-    [Migration("20220516143714_Initial")]
+    [Migration("20220516153325_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -629,6 +629,48 @@ namespace Music_2.Data.Migrations
                     b.HasIndex("AdminId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Music_2.Data.Entities.Singer", b =>
+                {
+                    b.Property<long>("SingerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("CategoryID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Desciption")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Meta")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("SingerID");
+
+                    b.ToTable("Singers");
                 });
 
             modelBuilder.Entity("Music_2.Data.Entities.Slide", b =>

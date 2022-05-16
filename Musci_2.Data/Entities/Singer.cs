@@ -32,5 +32,6 @@ namespace Music_2.Data.Entities
 
         [StringLength(10)]
         public string Code { get; set; }
+        public int ViewCount { get; set; }
     }
 }

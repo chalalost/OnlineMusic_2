@@ -60,6 +60,7 @@ namespace Music_2.Data.EF
         public DbSet<ProductImage> ProductImages { get; set; }
 
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<Singer> Singers { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Room> Rooms { get; set; }
     }

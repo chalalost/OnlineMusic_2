@@ -7,6 +7,7 @@ namespace Music_2.BackApi.Services
 {
     public interface IAuthenUserService
     {
-
+        //<summary>
+        //Authen 
     }
 }

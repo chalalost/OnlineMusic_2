@@ -8,6 +8,8 @@ namespace Music_2.BackApi.Services
     public class AuthenUserService : IAuthenUserService
     {
 
-        //summary   
+        //<summary>
+        //Authen tat ca
+
     }
 }
