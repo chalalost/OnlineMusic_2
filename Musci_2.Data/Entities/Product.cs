@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Music_2.Data.Entities
 {
-    [Table("SANPHAM")]
     public class Product
     {
         public int Id { set; get; }
