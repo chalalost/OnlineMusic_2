@@ -18,6 +18,8 @@ namespace Music_2.Data.Entities
         public List<Order> Orders { get; set; }
 
         public List<Transaction> Transactions { get; set; }
+        public ICollection<Room> Rooms { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
     }
 }

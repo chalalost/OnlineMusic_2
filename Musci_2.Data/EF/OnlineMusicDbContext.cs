@@ -6,6 +6,7 @@ using Music_2.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,26 +21,9 @@ namespace Music_2.Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configure using Fluent API
-            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderConfiguration());
-
-            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
-            modelBuilder.ApplyConfiguration(new ContactConfiguration());
-            modelBuilder.ApplyConfiguration(new LanguageConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
-            modelBuilder.ApplyConfiguration(new PromotionConfiguration());
-            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
-            modelBuilder.ApplyConfiguration(new SlideConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
@@ -76,5 +60,7 @@ namespace Music_2.Data.EF
         public DbSet<ProductImage> ProductImages { get; set; }
 
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Room> Rooms { get; set; }
     }
 }
