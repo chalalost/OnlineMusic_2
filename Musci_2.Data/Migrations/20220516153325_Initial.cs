@@ -120,6 +120,26 @@ namespace Music_2.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Singers",
+                columns: table => new
+                {
+                    SingerID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    MetaTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Desciption = table.Column<string>(type: "nvarchar(800)", maxLength: 800, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    CategoryID = table.Column<long>(type: "bigint", nullable: true),
+                    Meta = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    ViewCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Singers", x => x.SingerID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Slides",
                 columns: table => new
                 {
@@ -688,6 +708,9 @@ namespace Music_2.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Promotions");
+
+            migrationBuilder.DropTable(
+                name: "Singers");
 
             migrationBuilder.DropTable(
                 name: "Slides");
