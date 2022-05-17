@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,16 +39,16 @@ namespace Music_2.BackApi
         public void ConfigureServices(IServiceCollection services)
         {
             //khai bao db tu appsettings
-            /*services.AddDbContext<OnlineMusicDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));*/
+            services.AddDbContext<OnlineMusicDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));
             //setup, su dung identity server 4
             services.AddIdentity<User, Role>(options => {
-                options.Password.RequireDigit = false;
+                /*options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 5;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireUppercase = false;
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;*/
             })
                 .AddEntityFrameworkStores<OnlineMusicDbContext>()
                 .AddDefaultTokenProviders();
@@ -116,10 +117,10 @@ namespace Music_2.BackApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
-
+            services.AddHttpClient();
             //khai bao cac services
             services.AddTransient<IAuthenUserService, AuthenUserService>();
-
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews(options =>
             {
