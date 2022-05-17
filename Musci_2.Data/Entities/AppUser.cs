@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Music_2.Data.Entities
 {
-    public class User : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

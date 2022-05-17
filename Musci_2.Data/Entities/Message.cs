@@ -12,7 +12,7 @@ namespace Music_2.Data.Entities
         public string Content { get; set; }
         public DateTime TimeStamp { get; set; }
         public int ToRoomId { get; set; }
-        public User FromUser { get; set; }
+        public AppUser FromUser { get; set; }
         public Room ToRoom { get; set; }
     }
 }

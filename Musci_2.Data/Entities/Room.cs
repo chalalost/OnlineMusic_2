@@ -10,7 +10,7 @@ namespace Music_2.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public ICollection<Message> Messages { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Music_2.Data.EF
 {
-    public class OnlineMusicDbContext : IdentityDbContext<User, Role, Guid>
+    public class OnlineMusicDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public OnlineMusicDbContext(DbContextOptions options) : base(options)
         {
