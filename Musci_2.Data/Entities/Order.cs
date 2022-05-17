@@ -22,6 +22,6 @@ namespace Music_2.Data.Entities
 
         public List<OrderDetail> OrderDetails { get; set; }
 
-        public User AppUser { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

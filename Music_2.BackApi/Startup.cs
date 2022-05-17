@@ -17,6 +17,8 @@ using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Music_2.BackApi.Services;
+using Music_2.BackApi.Services.Role;
+using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
 using System;
@@ -42,7 +44,7 @@ namespace Music_2.BackApi
             services.AddDbContext<OnlineMusicDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));
             //setup, su dung identity server 4
-            services.AddIdentity<User, Role>(options => {
+            services.AddIdentity<AppUser, AppRole>(options => {
                 /*options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 5;
                 options.Password.RequireNonAlphanumeric = false;
@@ -120,7 +122,9 @@ namespace Music_2.BackApi
             services.AddHttpClient();
             //khai bao cac services
             services.AddTransient<IAuthenUserService, AuthenUserService>();
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>(); 
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
 
             services.AddControllersWithViews(options =>
             {

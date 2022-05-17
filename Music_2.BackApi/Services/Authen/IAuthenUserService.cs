@@ -8,9 +8,9 @@ namespace Music_2.BackApi.Services
 {
     public interface IAuthenUserService
     {
-        ///<summary>
-        ///Authen 
-        ///</summary>
+        /// <summary>
+        /// Authen Login
+        /// </summary>
         Task<ApiResult<string>> Authencate(LoginRequest request);
     }
 }

@@ -100,7 +100,7 @@ namespace Music_2.Front.Hubs
                 {
                     var user = _context.Users.Where(u => u.UserName == IdentityName).FirstOrDefault();
 
-                    var userViewModel = _mapper.Map<User, UserViewModel>(user);
+                    var userViewModel = _mapper.Map<AppUser, UserViewModel>(user);
                     userViewModel.CurrentRoom = "";
 
                     if (!_Connections.Any(u => u.UserName == IdentityName))

@@ -21,7 +21,7 @@ namespace Music_2.Data.Entities
 
         public Guid UserId { get; set; }
 
-        public User User { get; set; }
+        public AppUser User { get; set; }
 
     }
 }

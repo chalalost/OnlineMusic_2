@@ -16,13 +16,13 @@ namespace Music_2.BackApi.Services
 {
     public class AuthenUserService : IAuthenUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
         private readonly OnlineMusicDbContext _context;
 
-        public AuthenUserService(OnlineMusicDbContext context, UserManager<User> userManage, SignInManager<User> signInManage, RoleManager<Role> roleManager, IConfiguration config)
+        public AuthenUserService(OnlineMusicDbContext context, UserManager<AppUser> userManage, SignInManager<AppUser> signInManage, RoleManager<AppRole> roleManager, IConfiguration config)
         {
             _userManager = userManage;
             _signInManager = signInManage;
@@ -30,9 +30,7 @@ namespace Music_2.BackApi.Services
             _config = config;
             _context = context;
         }
-        /// <summary>
-        /// Authen Swagger+Login
-        /// </summary>
+        
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
