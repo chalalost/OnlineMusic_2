@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -21,6 +22,7 @@ using Music_2.BackApi.Services.Role;
 using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
+using Music_2.Data.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +121,14 @@ namespace Music_2.BackApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
+#if DEBUG
+            /*var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (environment == Environments.Development)
+            {
+                build.AddRazorRuntimeCompilation();
+            }*/
+#endif
+
             services.AddHttpClient();
             //khai bao cac services
             services.AddTransient<IAuthenUserService, AuthenUserService>();
@@ -126,13 +136,11 @@ namespace Music_2.BackApi
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
 
-            services.AddControllersWithViews(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            
+            services.AddControllers()
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+
+
             services.AddRazorPages();
         }
 
