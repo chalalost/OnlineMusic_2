@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Music_2.BackApi.Services.User
@@ -21,12 +23,13 @@ namespace Music_2.BackApi.Services.User
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
+        
         private readonly IConfiguration _config;
 
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
-            IConfiguration config)
+        IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;

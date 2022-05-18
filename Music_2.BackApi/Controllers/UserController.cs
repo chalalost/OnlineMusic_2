@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Music_2.BackApi.Models;
@@ -21,10 +22,12 @@ namespace Music_2.BackApi.Controllers
     {
         private readonly IAuthenUserService _authenService;
         private readonly IUserService _userService;
-        public UserController(IAuthenUserService authenService, IUserService userService)
+        private readonly IEmailSender _emailSender;
+        public UserController(IAuthenUserService authenService, IUserService userService, IEmailSender emailSender)
         {
             _authenService = authenService;
             _userService = userService;
+            _emailSender = emailSender;
         }
 
         [HttpPost("Authenticate")]
@@ -55,11 +58,14 @@ namespace Music_2.BackApi.Controllers
             {
                 return BadRequest(result);
             }
+            await _emailSender.SendEmailAsync(request.Email, "Confirm your email",
+                       // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                       $"Please confirm your account hehe <>clicking here</a>.");
             return Ok(result);
         }
 
         //PUT: http://localhost/api/users/id
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -73,7 +79,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}/roles")]
+        [HttpPut("Roles/{id}")]
         public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
         {
             if (!ModelState.IsValid)
@@ -88,7 +94,7 @@ namespace Music_2.BackApi.Controllers
         }
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("paging")]
+        [HttpGet("Paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
             var products = await _userService.GetUsersPaging(request);
