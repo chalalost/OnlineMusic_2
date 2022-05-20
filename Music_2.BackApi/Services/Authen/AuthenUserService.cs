@@ -59,5 +59,6 @@ namespace Music_2.BackApi.Services
 
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
+        //xử lý login vs facebook, google
     }
 }

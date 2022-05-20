@@ -7,8 +7,10 @@ using Microsoft.IdentityModel.Tokens;
 using Music_2.Data.Entities;
 using Music_2.Data.Models;
 using Music_2.Data.Models.CommonApi;
+using Music_2.Data.Models.Role;
 using Music_2.Data.Models.User;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -191,6 +193,22 @@ namespace Music_2.BackApi.Services.User
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            
+            var result = await _userManager.Users.Select(x => new UserViewModel()
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName,
+                Email = x.Email,
+                Dob = x.Dob,
+            }).ToListAsync();
+
+            return result;
         }
     }
 }
