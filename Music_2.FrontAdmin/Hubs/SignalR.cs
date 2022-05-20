@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Music_2.Front.Hubs
+namespace Music_2.FrontAdmin.Hubs
 {
     public class SignalR : Hub
     {

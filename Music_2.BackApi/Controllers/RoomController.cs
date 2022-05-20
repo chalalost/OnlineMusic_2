@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
 using Music_2.Data.Models;
-using Music_2.Front.Hubs;
+using Music_2.FrontAdmin.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
