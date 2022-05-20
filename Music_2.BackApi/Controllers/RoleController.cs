@@ -37,5 +37,11 @@ namespace Music_2.BackApi.Controllers
             var result = await _roleService.Remove(request);
             return Ok();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetByIdRole(Guid id)
+        {
+            var result = await _roleService.GetByIdRole(id);
+            return Ok(result);
+        }
     }
 }

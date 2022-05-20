@@ -34,5 +34,9 @@ namespace Music_2.BackApi.Services.User
         /// sửa role theo user
         /// </summary>
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+        /// <summary>
+        /// lấy ds user
+        /// </summary>
+        Task<List<UserViewModel>> GetAll();
     }
 }

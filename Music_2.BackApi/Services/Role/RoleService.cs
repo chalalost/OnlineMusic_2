@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Music_2.Data.Entities;
 using Music_2.Data.Models;
@@ -13,9 +14,11 @@ namespace Music_2.BackApi.Services.Role
     public class RoleService : IRoleService
     {
         private readonly RoleManager<AppRole> _roleManager;
-        public RoleService(RoleManager<AppRole> roleManager)
+        private readonly UserManager<AppUser> _userManager;
+        public RoleService(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         
         public async Task<List<RoleViewModel>> GetAllRole()
@@ -30,7 +33,15 @@ namespace Music_2.BackApi.Services.Role
 
             return roles;
         }
-        
+
+        public async Task<IList<AppUser>> GetByIdRole(Guid id)
+        {
+            var result = await _roleManager.FindByIdAsync(id.ToString());
+            var user = await _userManager.GetUsersInRoleAsync(result.Name);
+            return user;
+
+        }
+
         public async Task<ApiResult<bool>> Register(RoleRequest request)
         {
             var name = _roleManager.FindByNameAsync(request.Name);

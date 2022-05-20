@@ -17,7 +17,6 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IAuthenUserService _authenService;
@@ -60,7 +59,7 @@ namespace Music_2.BackApi.Controllers
             }
             await _emailSender.SendEmailAsync(request.Email, "Confirm your email",
                        // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                       $"Please confirm your account hehe <>clicking here</a>.");
+                       $"Hãy xác nhận địa chỉ email bằng cách <a href=''>bấm vào đây</a>.");
             return Ok(result);
         }
 
@@ -115,5 +114,11 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _userService.GetAll();
+            return Ok(result);
+        }
     }
 }
