@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Musci_2.Data\Music_2.Data.csproj" />
     <ProjectReference Include="..\Music_2.FrontAdmin\Music_2.FrontAdmin.csproj" />
     <ProjectReference Include="..\Music_2.Front\Music_2.Front.csproj" />
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
