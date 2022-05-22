@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music_2.Front", "Music_2.Fr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music_2.Data", "Musci_2.Data\Music_2.Data.csproj", "{32C2D182-3699-48A2-A8C0-10D81B3A3B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music_2.ApiIntegration", "Music_2.ApiIntegration\Music_2.ApiIntegration.csproj", "{0C9194BB-4132-449C-A251-D418CA7D6DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music_2.ApiIntegration", "Music_2.ApiIntegration\Music_2.ApiIntegration.csproj", "{0C9194BB-4132-449C-A251-D418CA7D6DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music_2.FrontAdmin", "Music_2.FrontAdmin\Music_2.FrontAdmin.csproj", "{D13F4111-B2D6-427B-992D-A893870257C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music_2.FrontAdmin", "Music_2.FrontAdmin\Music_2.FrontAdmin.csproj", "{D13F4111-B2D6-427B-992D-A893870257C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{FA4B25F8-A899-474F-BEA9-1DDE51D09A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D13F4111-B2D6-427B-992D-A893870257C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13F4111-B2D6-427B-992D-A893870257C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D13F4111-B2D6-427B-992D-A893870257C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4B25F8-A899-474F-BEA9-1DDE51D09A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4B25F8-A899-474F-BEA9-1DDE51D09A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4B25F8-A899-474F-BEA9-1DDE51D09A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4B25F8-A899-474F-BEA9-1DDE51D09A90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
