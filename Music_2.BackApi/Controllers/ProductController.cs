@@ -25,13 +25,13 @@ namespace Music_2.BackApi.Controllers
         public async Task<IActionResult> Get()
         {
             var products = await _productService.GetAll();
-            return Ok("ok"); 
+            return Ok(products); 
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] ProductCreateRequest request)
         {
-            var resut = await _productService.Create(request);
-            return Ok();
+            var result = await _productService.Create(request);
+            return Ok(result);
         }
     }
 }
