@@ -11,6 +11,7 @@ namespace Music_2.Data.Entities
     public class Product
     {
         public int Id { set; get; }
+        public string Name { get; set; }
         public decimal Price { set; get; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }

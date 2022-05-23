@@ -18,6 +18,7 @@ using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Music_2.BackApi.Services;
+using Music_2.BackApi.Services.Language;
 using Music_2.BackApi.Services.Role;
 using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
@@ -135,8 +136,9 @@ namespace Music_2.BackApi
             services.AddTransient<IEmailSender, EmailSender>(); 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ILanguageService, LanguageService>();
 
-            
+
             services.AddControllers()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 

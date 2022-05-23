@@ -518,6 +518,9 @@ namespace Music_2.Data.Migrations
                     b.Property<bool?>("IsFeatured")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 

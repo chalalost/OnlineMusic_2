@@ -10,8 +10,8 @@ using Music_2.Data.EF;
 namespace Music_2.Data.Migrations
 {
     [DbContext(typeof(OnlineMusicDbContext))]
-    [Migration("20220517162737_Initial")]
-    partial class Initial
+    [Migration("20220520135112_Inittial")]
+    partial class Inittial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -519,6 +519,9 @@ namespace Music_2.Data.Migrations
 
                     b.Property<bool?>("IsFeatured")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
