@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Music_2.FrontAdmin.Controllers
+namespace Music_2.Front.Controllers.Components
 {
-    public class HomeController : Controller
+    public class BlogController : Controller
     {
         public IActionResult Index()
         {

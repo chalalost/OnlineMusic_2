@@ -12,6 +12,7 @@ namespace Music_2.Data.Entities
     {
         public int Id { set; get; }
         public decimal Price { set; get; }
+        public string Name { get; set; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
         public int ViewCount { set; get; }

@@ -10,7 +10,7 @@ using Music_2.Data.EF;
 namespace Music_2.Data.Migrations
 {
     [DbContext(typeof(OnlineMusicDbContext))]
-    [Migration("20220517162737_Initial")]
+    [Migration("20220525101030_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -388,6 +388,29 @@ namespace Music_2.Data.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("Music_2.Data.Entities.FeedBack", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreateDate")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FeedBackContent")
+                        .HasColumnType("ntext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FeedBacks");
+                });
+
             modelBuilder.Entity("Music_2.Data.Entities.Language", b =>
                 {
                     b.Property<string>("Id")
@@ -436,6 +459,40 @@ namespace Music_2.Data.Migrations
                     b.HasIndex("ToRoomId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Music_2.Data.Entities.New", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("ntext");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Music_2.Data.Entities.Order", b =>
@@ -519,6 +576,9 @@ namespace Music_2.Data.Migrations
 
                     b.Property<bool?>("IsFeatured")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");

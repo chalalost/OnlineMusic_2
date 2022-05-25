@@ -82,5 +82,8 @@ namespace Music_2.Data.EF
         public DbSet<Singer> Singers { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<New> News { get; set; }
+
     }
 }

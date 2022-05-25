@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Music_2.Data.Entities
 {
-    public class NEWS
+    public class New
     {
         public long ID { get; set; }
 

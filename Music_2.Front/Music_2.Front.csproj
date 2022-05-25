@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Components\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\bootstrap-theme.css" />
     <None Include="wwwroot\bootstrap-theme.css.map" />
     <None Include="wwwroot\bootstrap-theme.min.css" />
