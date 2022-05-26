@@ -8,7 +8,14 @@ namespace Music_2.Front.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Index()
+        // GET: User
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult LogIn()
         {
             return View();
         }
