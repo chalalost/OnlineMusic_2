@@ -38,5 +38,19 @@ namespace Music_2.BackApi.Services.User
         /// lấy ds user
         /// </summary>
         Task<List<UserViewModel>> GetAll();
+        /// <summary>
+        /// tạo token quên mk
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
+        Task<ApiResult<string>> TokenForgotPass(InputModel Input);
+        /// <summary>
+        /// gửi mail confirm reset mk
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="token"></param>
+        /// <param name="newpassword"></param>
+        /// <returns></returns>
+        Task<ApiResult<bool>> GetResetPasswordConfirm(string email, string token, string newpassword);
     }
 }

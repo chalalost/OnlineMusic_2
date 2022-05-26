@@ -50,16 +50,15 @@ namespace Music_2.BackApi.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
             var result = await _userService.Register(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);
             }
-            await _emailSender.SendEmailAsync(request.Email, "Confirm your email",
-                       // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                       $"Hãy xác nhận địa chỉ email bằng cách <a href=''>bấm vào đây</a>.");
             return Ok(result);
         }
 
@@ -119,6 +118,20 @@ namespace Music_2.BackApi.Controllers
         {
             var result = await _userService.GetAll();
             return Ok(result);
+        }
+        [HttpPost("GetTokenForgotPass")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTokenForgotPass(InputModel Input)
+        {
+            var kq = await _userService.TokenForgotPass(Input);
+            return Ok(kq);
+        }
+        [AllowAnonymous]
+        [HttpGet("ResetPasswordConfirm")]
+        public async Task<IActionResult> ResetPasswordConfirm(string email, string token, string newpassword)
+        {
+            var kq = await _userService.GetResetPasswordConfirm(email, token, newpassword);
+            return Ok(kq);
         }
     }
 }

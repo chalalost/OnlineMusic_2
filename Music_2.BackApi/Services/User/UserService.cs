@@ -116,17 +116,17 @@ namespace Music_2.BackApi.Services.User
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user != null)
-            {
-                return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
-            }
-            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            var Email = _userManager.Users.FirstOrDefault(x => x.Email == request.Email);
+            if (Email != null)
             {
                 return new ApiErrorResult<bool>("Emai đã tồn tại");
             }
-
-            user = new AppUser()
+            var UserName = await _userManager.FindByNameAsync(request.UserName);
+            if (UserName != null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
+            }
+            var user = new AppUser()
             {
                 Dob = request.Dob,
                 Email = request.Email,
@@ -136,10 +136,17 @@ namespace Music_2.BackApi.Services.User
                 PhoneNumber = request.PhoneNumber
             };
             var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            /*await new EmailSender().SendEmailAsync(Email, "Confirm your email"
+                , $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");*/
+            await new EmailSender().SendEmailAsync(request.Email, "Confirm your email"
+                , $"Please confirm your account by <a href=''>clicking here</a>.");
+            var end = await _userManager.ConfirmEmailAsync(user, token);
+            if (end.Succeeded)
             {
                 return new ApiSuccessResult<bool>();
             }
+
             return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
 
@@ -209,6 +216,42 @@ namespace Music_2.BackApi.Services.User
             }).ToListAsync();
 
             return result;
+        }
+        public async Task<ApiResult<string>> TokenForgotPass(InputModel Input)
+        {
+            var user = await _userManager.FindByEmailAsync(Input.Email);
+            if (user == null)
+            {
+                return new ApiErrorResult<string>("ko thanh cong");
+            }
+
+            // Phát sinh Token để reset password
+            // Token sẽ được kèm vào link trong email,
+            // link dẫn đến trang /Account/ResetPassword để kiểm tra và đặt lại mật khẩu
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            token = System.Web.HttpUtility.UrlEncode(token);
+            /*token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));*/
+            return new ApiSuccessResult<string>(token);
+        }
+
+        public async Task<ApiResult<bool>> GetResetPasswordConfirm(string email, string token, string newpassword)
+        {
+            if (email == null || token == null)
+            {
+                return new ApiErrorResult<bool>(false.ToString());
+            }
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>(false.ToString());
+            }
+            string code = token;
+            var result = await _userManager.ResetPasswordAsync(user, code, newpassword);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<bool>(true);
+            }
+            return new ApiErrorResult<bool>(false.ToString());
         }
     }
 }

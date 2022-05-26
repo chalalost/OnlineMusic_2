@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Musci_2.Data\Music_2.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FeedBack\" />
+    <Folder Include="New\" />
+    <Folder Include="Singer\" />
+  </ItemGroup>
+
 </Project>
