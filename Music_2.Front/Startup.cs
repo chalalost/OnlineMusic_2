@@ -1,9 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Music_2.ApiIntegration;
+using Music_2.ApiIntegration.Category;
+using Music_2.ApiIntegration.Product;
+using Music_2.ApiIntegration.Slide;
+using Music_2.ApiIntegration.User;
 using Music_2.Front.Hubs;
 using System;
 using System.Collections.Generic;
@@ -24,6 +30,7 @@ namespace Music_2.Front
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddCors(option => option.AddPolicy("CorsPolicy", builder =>
             {
@@ -35,6 +42,18 @@ namespace Music_2.Front
                     .WithOrigins("http://localhost:19401");
             }));
             services.AddSignalR(cfg => cfg.EnableDetailedErrors = true);
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            //khai bao services
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

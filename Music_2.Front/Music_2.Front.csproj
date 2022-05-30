@@ -864,6 +864,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Musci_2.Data\Music_2.Data.csproj" />
+    <ProjectReference Include="..\Music_2.ApiIntegration\Music_2.ApiIntegration.csproj" />
   </ItemGroup>
 
 </Project>
