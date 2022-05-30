@@ -90,6 +90,7 @@ namespace Music_2.BackApi.Services.Product
             var product = new Data.Entities.Product()
             {
                 Price = request.Price,
+                Name = request.Name,
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
