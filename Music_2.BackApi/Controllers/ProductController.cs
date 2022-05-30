@@ -59,7 +59,6 @@ namespace Music_2.BackApi.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -77,7 +76,6 @@ namespace Music_2.BackApi.Controllers
 
         [HttpPut("{productId}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -92,7 +90,6 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpDelete("{productId}")]
-        [Authorize]
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);
@@ -102,7 +99,6 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpPatch("{productId}/{newPrice}")]
-        [Authorize]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
@@ -130,7 +126,6 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpPut("{productId}/images/{imageId}")]
-        [Authorize]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -145,7 +140,6 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpDelete("{productId}/images/{imageId}")]
-        [Authorize]
         public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -169,7 +163,6 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpPut("{id}/categories")]
-        [Authorize]
         public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
         {
             if (!ModelState.IsValid)
