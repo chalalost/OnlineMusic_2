@@ -51,12 +51,6 @@ namespace Music_2.BackApi
             options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));
             //setup, su dung identity server 4
             services.AddIdentity<AppUser, AppRole>(options => {
-                /*options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireUppercase = false;
-                options.User.RequireUniqueEmail = true;*/
             })
                 .AddEntityFrameworkStores<OnlineMusicDbContext>()
                 .AddDefaultTokenProviders();
@@ -125,13 +119,7 @@ namespace Music_2.BackApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
-#if DEBUG
-            /*var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (environment == Environments.Development)
-            {
-                build.AddRazorRuntimeCompilation();
-            }*/
-#endif
+
 
             services.AddHttpClient();
             //khai bao cac services

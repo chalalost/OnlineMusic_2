@@ -59,7 +59,7 @@ namespace Music_2.BackApi.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        /*[Authorize]*/
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -160,7 +160,7 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpGet("{productId}/images/{imageId}")]
-        public async Task<IActionResult> GetImageById(int imageId)
+        public async Task<IActionResult> GetImageById(int productId, int imageId)
         {
             var image = await _productService.GetImageById(imageId);
             if (image == null)
