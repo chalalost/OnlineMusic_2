@@ -24,6 +24,7 @@ using Music_2.BackApi.Services.FeedBack;
 using Music_2.BackApi.Services.Order;
 using Music_2.BackApi.Services.Product;
 using Music_2.BackApi.Services.Role;
+using Music_2.BackApi.Services.Singer;
 using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
@@ -133,6 +134,7 @@ namespace Music_2.BackApi
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IFeedBackService, FeedBackService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISingerService, SingerService>();
 
             services.AddControllers()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

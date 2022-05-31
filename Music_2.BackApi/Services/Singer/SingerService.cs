@@ -1,4 +1,5 @@
-﻿using Music_2.Data.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using Music_2.Data.EF;
 using Music_2.Data.Models.Singer;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,20 @@ namespace Music_2.BackApi.Services.Singer
             _context = context;
         }
 
-        public Task<List<SingerViewModel>> GetAll()
+        public async Task<List<SingerViewModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var sing = await _context.Singers
+                .Select(x => new SingerViewModel()
+                {
+                    SingerID = x.SingerID,
+                    Name = x.Name,
+                    MetaTitle = x.MetaTitle,
+                    Desciption = x.Desciption,
+                    Image = x.Image,
+                    Code = x.Code,
+                    ViewCount = x.ViewCount
+                }).ToListAsync();
+            return sing;
         }
     }
 }
