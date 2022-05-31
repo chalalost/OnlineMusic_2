@@ -18,6 +18,7 @@ using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Music_2.BackApi.Services;
+using Music_2.BackApi.Services.Category;
 using Music_2.BackApi.Services.Common;
 using Music_2.BackApi.Services.FeedBack;
 using Music_2.BackApi.Services.Order;
@@ -131,6 +132,7 @@ namespace Music_2.BackApi
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IFeedBackService, FeedBackService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             services.AddControllers()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
