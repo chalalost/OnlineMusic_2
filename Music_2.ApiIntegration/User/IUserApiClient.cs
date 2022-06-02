@@ -1,7 +1,9 @@
 ﻿using Music_2.Data.Models;
 using Music_2.Data.Models.CommonApi;
+using Music_2.Data.Models.Role;
 using Music_2.Data.Models.User;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Music_2.ApiIntegration
@@ -57,5 +59,9 @@ namespace Music_2.ApiIntegration
         /// <returns></returns>
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+        Task<ApiResult<GetList<UserViewModel>>> GetAll();
+        Task<ApiResult<List<RoleViewModel>>> GetAllRole();
+        Task<ApiResult<string>> GetTokenForgotPass(InputModel Input);
+        Task<ApiResult<string>> ResetPasswordConfirm(string email, string token, string newpassword);
     }
 }

@@ -113,7 +113,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _userService.GetAll();
