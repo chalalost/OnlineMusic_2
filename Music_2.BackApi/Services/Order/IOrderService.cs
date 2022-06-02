@@ -8,6 +8,10 @@ namespace Music_2.BackApi.Services.Order
 {
     public interface IOrderService
     {
+        /// <summary>
+        /// lấy ds order
+        /// </summary>
+        /// <returns></returns>
         Task<List<OrderViewModel>> GetAll();
     }
 }

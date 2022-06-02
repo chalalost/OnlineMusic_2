@@ -69,7 +69,7 @@ namespace Music_2.Front.Controllers
                         userPrincipal,
                         authProperties);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Success", "Home");
         }
 
         [HttpGet]
