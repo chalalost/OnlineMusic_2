@@ -70,7 +70,7 @@ namespace Music_2.BackApi.Services.Role
             var val = await _roleManager.FindByIdAsync(request.Id.ToString());
             if (val == null)
             {
-                return new ApiErrorResult<bool>("Xoas không thành công");
+                return new ApiErrorResult<bool>("Xóa không thành công");
             }
             var end = await _roleManager.DeleteAsync(val);
             if (end.Succeeded)
@@ -78,7 +78,7 @@ namespace Music_2.BackApi.Services.Role
                 return new ApiSuccessResult<bool>();
             }
 
-            return new ApiErrorResult<bool>("Xoas không thành công");
+            return new ApiErrorResult<bool>("Xóa không thành công");
         }
     }
 }

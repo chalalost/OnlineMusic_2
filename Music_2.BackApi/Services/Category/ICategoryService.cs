@@ -8,6 +8,7 @@ namespace Music_2.BackApi.Services.Category
 {
     public interface ICategoryService
     {
+        Task<int> Create(CategoryCreateRequest request);
         Task<List<CategoryViewModel>> GetAll(string languageId);
 
         Task<CategoryViewModel> GetById(string languageId, int id);
