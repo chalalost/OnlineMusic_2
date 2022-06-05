@@ -67,10 +67,9 @@ namespace Music_2.BackApi.Services.User
             {
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                FirstName = user.FirstName,
+                Name = user.Name,
                 Dob = user.Dob,
                 Id = user.Id,
-                LastName = user.LastName,
                 UserName = user.UserName,
                 Roles = roles
             };
@@ -97,9 +96,8 @@ namespace Music_2.BackApi.Services.User
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
                     UserName = x.UserName,
-                    FirstName = x.FirstName,
                     Id = x.Id,
-                    LastName = x.LastName
+                    Name = x.Name
                 }).ToListAsync();
 
             //4. Select and projection
@@ -130,8 +128,7 @@ namespace Music_2.BackApi.Services.User
             {
                 Dob = request.Dob,
                 Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
+                Name = request.Name,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber
             };
@@ -190,8 +187,7 @@ namespace Music_2.BackApi.Services.User
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.Dob = request.Dob;
             user.Email = request.Email;
-            user.FirstName = request.FirstName;
-            user.LastName = request.LastName;
+            user.Name = request.Name;
             user.PhoneNumber = request.PhoneNumber;
 
             var result = await _userManager.UpdateAsync(user);
@@ -207,8 +203,7 @@ namespace Music_2.BackApi.Services.User
             var result = await _userManager.Users.Select(x => new UserViewModel()
             {
                 Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
+                Name = x.Name,
                 PhoneNumber = x.PhoneNumber,
                 UserName = x.UserName,
                 Email = x.Email,

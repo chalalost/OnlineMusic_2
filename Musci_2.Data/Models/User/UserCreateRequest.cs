@@ -15,9 +15,7 @@ namespace Music_2.Data.Models
 
         public string PhoneNumber { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
         public string Dob { get; set; }
     }

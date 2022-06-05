@@ -11,11 +11,8 @@ namespace Music_2.Data.Models.User
     {
         public Guid Id { get; set; }
 
-        [Display(Name = "FirstName")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "LastName")]
-        public string LastName { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
 
         [Display(Name = "Dob")]
         [DataType(DataType.Date)]

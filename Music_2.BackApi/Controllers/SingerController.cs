@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Music_2.BackApi.Services.Singer;
 using Music_2.Data.Models.Singer;
 using System;
@@ -10,6 +11,7 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SingerController : ControllerBase
     {
         private readonly ISingerService _singService;

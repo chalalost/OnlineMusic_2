@@ -8,10 +8,8 @@ namespace Music_2.Data.Models
 {
     public class RegisterRequest
     {
-        [Display(Name = "FirstName")]
-        public string FirstName { get; set; }
-        [Display(Name = "LastName")]
-        public string LastName { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         public DateTime Dob { get; set; }

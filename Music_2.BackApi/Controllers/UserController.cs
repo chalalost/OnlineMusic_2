@@ -17,6 +17,7 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IAuthenUserService _authenService;

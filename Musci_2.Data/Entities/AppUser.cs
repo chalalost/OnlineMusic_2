@@ -9,8 +9,7 @@ namespace Music_2.Data.Entities
 {
     public class AppUser : IdentityUser<Guid>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public DateTime Dob { get; set; }
 
         public List<Cart> Carts { get; set; }

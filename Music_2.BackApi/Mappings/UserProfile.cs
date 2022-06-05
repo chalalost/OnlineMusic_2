@@ -15,7 +15,7 @@ namespace Music_2.BackApi.Mappings
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(dst => dst.UserName, opt => opt.MapFrom(x => x.UserName));
             CreateMap<UserViewModel, AppUser>()
-                .ForMember(dst => dst.FirstName, opt => opt.MapFrom(x => x.FirstName)); ;
+                .ForMember(dst => dst.Name, opt => opt.MapFrom(x => x.Name)); ;
         }
     }
 }

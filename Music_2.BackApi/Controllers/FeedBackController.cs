@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Music_2.BackApi.Services.FeedBack;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FeedBackController : ControllerBase
     {
         private readonly IFeedBackService _fbService;

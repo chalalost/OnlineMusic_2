@@ -44,7 +44,7 @@ namespace Music_2.BackApi.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.FirstName),
+                new Claim(ClaimTypes.GivenName,user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName)
             };

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Music_2.BackApi.Services.Role;
 using Music_2.Data.Models;
 using Music_2.Data.Models.Role;
@@ -11,6 +12,7 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly IRoleService _roleService;

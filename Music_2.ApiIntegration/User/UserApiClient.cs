@@ -35,7 +35,8 @@ namespace Music_2.ApiIntegration.User
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            /*client.BaseAddress = new Uri("https://localhost:5001");*/
+            client.BaseAddress = new Uri("https://localhost:5001");
             var response = await client.PostAsync("/api/User/Authenticate", httpContent);
             if (response.IsSuccessStatusCode)
             {
@@ -49,7 +50,7 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.DeleteAsync($"/api/User/{id}");
             var body = await response.Content.ReadAsStringAsync();
@@ -63,7 +64,7 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync("/api/User/GetAll");
@@ -79,7 +80,7 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/Role/GetAll");
             var body = await response.Content.ReadAsStringAsync();
@@ -95,7 +96,7 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/User/{id}");
             var body = await response.Content.ReadAsStringAsync();
@@ -108,7 +109,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<string>> GetTokenForgotPass(InputModel Input)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var json = JsonConvert.SerializeObject(Input);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -126,7 +127,7 @@ namespace Music_2.ApiIntegration.User
             var client = _httpClientFactory.CreateClient();
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/User/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
@@ -138,8 +139,8 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> RegisterUser(RegisterRequest registerRequest)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-
+            /*client.BaseAddress = new Uri("https://localhost:5001");*/
+            client.BaseAddress = new Uri("https://localhost:5001");
             var json = JsonConvert.SerializeObject(registerRequest);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -154,7 +155,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<string>> ResetPasswordConfirm(string email, string token, string newpassword)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/User/ResetPasswordConfirm?email={email}&token={token}&newpassword={newpassword}");
@@ -168,7 +169,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
@@ -187,7 +188,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> UpdateUser(Guid id, UserUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.BaseAddress = new Uri("https://localhost:5001");
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);

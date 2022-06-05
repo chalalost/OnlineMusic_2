@@ -74,7 +74,7 @@ namespace Music_2.FrontAdmin.Controllers
             return principal;
         }
         [HttpGet]
-        public ActionResult Fogot()
+        public ActionResult ForgotPassword()
         {
             return View();
         }
@@ -106,21 +106,6 @@ namespace Music_2.FrontAdmin.Controllers
 
             return View();
         }
-        [HttpGet]
-        public IActionResult Text()
-        {
-            return View();
-        }
-        /* [HttpGet]
-         public async Task<IActionResult> ResetPasswordConfirm(string email,string token)
-         {
-             if(email==null || token == null)
-             {
-                 return RedirectToAction("Index", "Login");
-             }
-             var kq = await _userAPIClient.ResetPasswordConfirm(email,token);
-             return RedirectToAction("ForgotPasswordConfirmation");
-         }*/
 
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordConfirmation(string email, string token, string newpassword)
