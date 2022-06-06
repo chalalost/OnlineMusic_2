@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music_2.ApiIntegration;
+using Music_2.ApiIntegration.Role;
 using Music_2.ApiIntegration.User;
 using Music_2.Data.Models.User;
 using Music_2.FrontAdmin.Hubs;
@@ -46,6 +47,7 @@ namespace Music_2.FrontAdmin
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IRoleApiClient, RoleApiClient>();
 
             services.AddSession(options =>
             {

@@ -30,7 +30,7 @@ namespace Music_2.BackApi.Controllers
             _emailSender = emailSender;
         }
 
-        [HttpPost("Authenticate")]
+        [HttpPost("authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
@@ -64,7 +64,7 @@ namespace Music_2.BackApi.Controllers
         }
 
         //PUT: http://localhost/api/users/id
-        [HttpPut("Update/{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Roles/{id}")]
+        [HttpPut("roles/{id}")]
         public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
         {
             if (!ModelState.IsValid)
@@ -93,11 +93,11 @@ namespace Music_2.BackApi.Controllers
         }
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("Paging")]
+        [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
-            var products = await _userService.GetUsersPaging(request);
-            return Ok(products);
+            var user = await _userService.GetUsersPaging(request);
+            return Ok(user);
         }
 
         [HttpGet("{id}")]
@@ -114,13 +114,13 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _userService.GetAll();
             return Ok(result);
         }
-        [HttpPost("GetTokenForgotPass")]
+        [HttpPost("gettokenforgotpass")]
         [AllowAnonymous]
         public async Task<IActionResult> GetTokenForgotPass(InputModel Input)
         {
@@ -128,7 +128,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(kq);
         }
         [AllowAnonymous]
-        [HttpGet("ResetPasswordConfirm")]
+        [HttpGet("resetpasswordconfirm")]
         public async Task<IActionResult> ResetPasswordConfirm(string email, string token, string newpassword)
         {
             var kq = await _userService.GetResetPasswordConfirm(email, token, newpassword);

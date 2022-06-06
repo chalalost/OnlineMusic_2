@@ -1,0 +1,59 @@
+﻿@using Music_2.Data.Models.CommonApi
+@model PagedResult<Music_2.Data.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between">
+    <button class="btn btn-light" type="button">
+        @Html.ActionLink("Thêm người dùng", "Index")
+    </button>
+    <button class="btn btn-light" type="button">
+        <i class="fas fa-download fa-sm text-white-50"></i>
+        @Html.ActionLink("Export to Excel", "Export")
+    </button>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Tài khoản</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th>Ngày sinh</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.UserName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Email</td>
+                        <td>@item.Dob</td>
+                        <td>
+                            <a href="/User/Edit?id=@item.Id">Sửa</a>
+                            |
+                            <a href="/User/Detail?id=@item.Id">Chi Tiết</a>
+                            |
+                            <a href="/User/Delete?id=@item.Id"> Xóa</a>
+                        </td>
+                        
+                    </tr>
+}
+
+                </tbody>
+            </table>
+            @*@Html.PagedListPager(Model, Page => Url.Action("Danhsach", new { Page }));*@
+        </div>
+    </div>
+</div>

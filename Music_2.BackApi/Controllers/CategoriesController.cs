@@ -22,7 +22,7 @@ namespace Music_2.BackApi.Controllers
         }
 
         [HttpPost]
-        /*[Consumes("multipart/form-data")]*/
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -38,7 +38,7 @@ namespace Music_2.BackApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cateId }, cate);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll(string languageId)
         {
             var cates = await _categoryService.GetAll(languageId);

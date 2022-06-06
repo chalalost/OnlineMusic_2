@@ -21,7 +21,7 @@ namespace Music_2.BackApi.Controllers
         {
             _roleService = roleService;
         }
-        [HttpGet("GetRoles")]
+        [HttpGet("getroles")]
         public async Task<IActionResult> GetAll()
         {
             var roles = await _roleService.GetAllRole();

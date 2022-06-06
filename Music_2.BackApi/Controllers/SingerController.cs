@@ -32,7 +32,7 @@ namespace Music_2.BackApi.Controllers
             return Ok("ovanke");
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var orders = await _singService.GetAll();

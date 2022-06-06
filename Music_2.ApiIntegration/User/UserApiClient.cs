@@ -35,9 +35,8 @@ namespace Music_2.ApiIntegration.User
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            /*client.BaseAddress = new Uri("https://localhost:5001");*/
-            client.BaseAddress = new Uri("https://localhost:5001");
-            var response = await client.PostAsync("/api/User/Authenticate", httpContent);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync("/api/user/authenticate", httpContent);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(await response.Content.ReadAsStringAsync());
@@ -50,9 +49,9 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.DeleteAsync($"/api/User/{id}");
+            var response = await client.DeleteAsync($"/api/user/{id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
@@ -64,10 +63,10 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync("/api/User/GetAll");
+            var response = await client.GetAsync("/api/user/getall");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
@@ -80,9 +79,9 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/Role/GetAll");
+            var response = await client.GetAsync($"/api/role/getall");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
@@ -96,9 +95,9 @@ namespace Music_2.ApiIntegration.User
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/User/{id}");
+            var response = await client.GetAsync($"/api/user/{id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModel>>(body);
@@ -109,12 +108,12 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<string>> GetTokenForgotPass(InputModel Input)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var json = JsonConvert.SerializeObject(Input);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.PostAsync("/api/User/GetTokenForgotPass", httpContent);
+            var response = await client.PostAsync("/api/user/gettokenforgotpass", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(result);
@@ -127,9 +126,9 @@ namespace Music_2.ApiIntegration.User
             var client = _httpClientFactory.CreateClient();
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/User/paging?pageIndex=" +
+            var response = await client.GetAsync($"/api/user/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
             var body = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserViewModel>>>(body);
@@ -139,12 +138,11 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> RegisterUser(RegisterRequest registerRequest)
         {
             var client = _httpClientFactory.CreateClient();
-            /*client.BaseAddress = new Uri("https://localhost:5001");*/
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var json = JsonConvert.SerializeObject(registerRequest);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"/api/User", httpContent);
+            var response = await client.PostAsync($"/api/user", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
@@ -155,10 +153,10 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<string>> ResetPasswordConfirm(string email, string token, string newpassword)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/User/ResetPasswordConfirm?email={email}&token={token}&newpassword={newpassword}");
+            var response = await client.GetAsync($"/api/user/resetpasswordconfirm?email={email}&token={token}&newpassword={newpassword}");
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(result);
@@ -169,7 +167,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
@@ -177,7 +175,7 @@ namespace Music_2.ApiIntegration.User
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/User/{id}/roles", httpContent);
+            var response = await client.PutAsync($"/api/user/{id}/roles", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
@@ -188,7 +186,7 @@ namespace Music_2.ApiIntegration.User
         public async Task<ApiResult<bool>> UpdateUser(Guid id, UserUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
@@ -196,7 +194,7 @@ namespace Music_2.ApiIntegration.User
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/User/{id}", httpContent);
+            var response = await client.PutAsync($"/api/user/{id}", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);

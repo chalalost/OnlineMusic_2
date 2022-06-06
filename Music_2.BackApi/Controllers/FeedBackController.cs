@@ -20,7 +20,7 @@ namespace Music_2.BackApi.Controllers
             _fbService = fbService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var orders = await _fbService.GetAll();

@@ -70,7 +70,7 @@ namespace Music_2.ApiIntegration.Product
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
             requestContent.Add(new StringContent(languageId), "languageId");
 
-            var response = await client.PostAsync($"/api/products/", requestContent);
+            var response = await client.PostAsync($"/api/product/", requestContent);
             return response.IsSuccessStatusCode;
         }
 
@@ -111,14 +111,14 @@ namespace Music_2.ApiIntegration.Product
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
             requestContent.Add(new StringContent(languageId), "languageId");
 
-            var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
+            var response = await client.PutAsync($"/api/product/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<PagedResult<ProductViewModel>> GetPagings(GetManageProductPagingRequest request)
         {
             var data = await GetAsync<PagedResult<ProductViewModel>>(
-                $"/api/products/paging?pageIndex={request.PageIndex}" +
+                $"/api/product/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
                 $"&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
 
@@ -136,7 +136,7 @@ namespace Music_2.ApiIntegration.Product
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/products/{id}/categories", httpContent);
+            var response = await client.PutAsync($"/api/product/{id}/categories", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
@@ -146,26 +146,26 @@ namespace Music_2.ApiIntegration.Product
 
         public async Task<ProductViewModel> GetById(int id, string languageId)
         {
-            var data = await GetAsync<ProductViewModel>($"/api/products/{id}/{languageId}");
+            var data = await GetAsync<ProductViewModel>($"/api/product/{id}/{languageId}");
 
             return data;
         }
 
         public async Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take)
         {
-            var data = await GetListAsync<ProductViewModel>($"/api/products/featured/{languageId}/{take}");
+            var data = await GetListAsync<ProductViewModel>($"/api/product/featured/{languageId}/{take}");
             return data;
         }
 
         public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
         {
-            var data = await GetListAsync<ProductViewModel>($"/api/products/latest/{languageId}/{take}");
+            var data = await GetListAsync<ProductViewModel>($"/api/product/latest/{languageId}/{take}");
             return data;
         }
 
         public async Task<bool> DeleteProduct(int id)
         {
-            return await Delete($"/api/products/" + id);
+            return await Delete($"/api/product/" + id);
         }
     }
 }

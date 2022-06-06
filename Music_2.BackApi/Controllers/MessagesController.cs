@@ -44,7 +44,7 @@ namespace Music_2.BackApi.Controllers
         }
 
 
-        [HttpGet("Room/{roomName}")]
+        [HttpGet("room/{roomName}")]
         public IActionResult GetMessages(string roomName)
         {
             var room = _context.Rooms.FirstOrDefault(r => r.Name == roomName);
