@@ -14,7 +14,7 @@ namespace Music_2.Data.Models.User
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Dob")]
+        [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime Dob { get; set; }
 
