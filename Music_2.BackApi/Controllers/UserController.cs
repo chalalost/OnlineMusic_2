@@ -1,15 +1,20 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Music_2.BackApi.Models;
 using Music_2.BackApi.Services;
 using Music_2.BackApi.Services.User;
+using Music_2.Data.EF;
 using Music_2.Data.Models;
 using Music_2.Data.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,11 +28,14 @@ namespace Music_2.BackApi.Controllers
         private readonly IAuthenUserService _authenService;
         private readonly IUserService _userService;
         private readonly IEmailSender _emailSender;
-        public UserController(IAuthenUserService authenService, IUserService userService, IEmailSender emailSender)
+        public readonly OnlineMusicDbContext _context;
+
+        public UserController(IAuthenUserService authenService, IUserService userService, IEmailSender emailSender, OnlineMusicDbContext context)
         {
             _authenService = authenService;
             _userService = userService;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpPost("authenticate")]
@@ -63,7 +71,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(result);
         }
 
-        //PUT: http://localhost/api/users/id
+        //PUT: http://localhost/api/user/update/id
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         {
@@ -134,5 +142,8 @@ namespace Music_2.BackApi.Controllers
             var kq = await _userService.GetResetPasswordConfirm(email, token, newpassword);
             return Ok(kq);
         }
+
+        
+
     }
 }

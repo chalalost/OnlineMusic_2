@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Music_2.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace Music_2.Data.Models
         public DateTime Dob { get; set; }
         public string CurrentRoom { get; set; }
         public IList<string> Roles { get; set; }
+        public List<AppUser> Users { get; set; }
     }
 }

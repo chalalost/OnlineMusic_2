@@ -1,4 +1,5 @@
-﻿using Music_2.Data.Models.Catalog.Categories;
+﻿using Music_2.Data.Models;
+using Music_2.Data.Models.Catalog.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace Music_2.ApiIntegration.Category
 {
     public interface ICategoryApiClient
     {
-        Task<List<CategoryViewModel>> GetAll(string languageId);
+        Task<ApiResult<bool>> Create(CategoryCreateRequest request);
+        Task<ApiResult<CategoryViewModel>> GetAll(string languageId);
 
-        Task<CategoryViewModel> GetById(string languageId, int id);
+        Task<ApiResult<CategoryViewModel>> GetById(string languageId, int id);
     }
 }

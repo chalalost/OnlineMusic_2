@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Music_2.ApiIntegration;
 using Music_2.ApiIntegration.Role;
+using Music_2.Data.EF;
 using Music_2.Data.Models;
 using Music_2.Data.Models.CommonApi;
 using Music_2.Data.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,11 +24,14 @@ namespace Music_2.FrontAdmin.Controllers
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
         private readonly IRoleApiClient _roleApiClient;
-        public UserController(IUserApiClient userApiClient, IConfiguration configuration, IRoleApiClient roleApiClient)
+        private readonly OnlineMusicDbContext _context;
+
+        public UserController(IUserApiClient userApiClient, IConfiguration configuration, IRoleApiClient roleApiClient, OnlineMusicDbContext context)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
             _roleApiClient = roleApiClient;
+            _context = context;
         }
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -184,6 +192,95 @@ namespace Music_2.FrontAdmin.Controllers
                 });
             }
             return roleAssignRequest;
+        }
+
+        //export
+        private DataTable GetUsersDetail()
+        {
+            var users = _context.Users.ToList();
+
+            DataTable dtUser = new DataTable("Users");
+            dtUser.Columns.AddRange(new DataColumn[6] { new DataColumn("ID"),
+                                            new DataColumn("UserName"),
+                                            new DataColumn("Name"),
+                                            new DataColumn("Dob"),
+                                            new DataColumn("Email"),
+                                            new DataColumn("PhoneNumber")});
+            foreach (var user in users)
+            {
+                dtUser.Rows.Add(user.Id, user.UserName, user.Name, user.Dob, user.Email, user.PhoneNumber);
+            }
+
+            return dtUser;
+        }
+
+        [HttpPost]
+        public IActionResult Export()
+        {
+            var dictioneryexportType = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+            var exportType = dictioneryexportType["Export"];
+            var user = GetUsersDetail();
+            switch (exportType)
+            {
+                case "Excel":
+                    ExportToExcel(user);
+                    break;
+                    /*case "Csv":
+                        ExportToCsv(user);
+                        break;
+                    case "Pdf":
+                        ExportToPdf(user);
+                        break;
+                    case "Word":
+                        ExportToWord(user);
+                        break;
+                    case "Json":
+                        ExportToJson(user);
+                        break;
+                    case "Xml":
+                        ExportToXML(user);
+                        break;
+                    case "Text":
+                        ExportToText(user);
+                        break;*/
+            }
+            return null;
+        }
+        private void ExportToExcel(DataTable user)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Users");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "ID";
+                worksheet.Cell(currentRow, 2).Value = "UserName";
+                worksheet.Cell(currentRow, 3).Value = "Name";
+                worksheet.Cell(currentRow, 4).Value = "Dob";
+                worksheet.Cell(currentRow, 5).Value = "Email";
+                worksheet.Cell(currentRow, 6).Value = "PhoneNumber";
+
+                for (int i = 0; i < user.Rows.Count; i++)
+                {
+                    {
+                        currentRow++;
+                        worksheet.Cell(currentRow, 1).Value = user.Rows[i]["ID"];
+                        worksheet.Cell(currentRow, 2).Value = user.Rows[i]["UserName"];
+                        worksheet.Cell(currentRow, 3).Value = user.Rows[i]["Name"];
+                        worksheet.Cell(currentRow, 4).Value = user.Rows[i]["Dob"];
+                        worksheet.Cell(currentRow, 5).Value = user.Rows[i]["Email"];
+                        worksheet.Cell(currentRow, 6).Value = user.Rows[i]["PhoneNumber"];
+
+                    }
+                }
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                Response.Clear();
+                Response.Headers.Add("content-disposition", "attachment;filename=Users.xls");
+                Response.ContentType = "application/xls";
+                Response.Body.WriteAsync(content);
+                Response.Body.Flush();
+            }
         }
 
     }

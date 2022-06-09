@@ -4,6 +4,13 @@
 @{
     ViewData["Title"] = "Danh sách người dùng";
 }
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
 
 <div class="d-sm-flex align-items-center justify-content-between">
     <button class="btn btn-light" type="button">
@@ -19,6 +26,12 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -34,26 +47,26 @@
                 <tbody>
                     @foreach (var item in Model.Items)
                     {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.UserName</td>
-                        <td>@item.PhoneNumber</td>
-                        <td>@item.Email</td>
-                        <td>@item.Dob</td>
-                        <td>
-                            <a href="/User/Edit?id=@item.Id">Sửa</a>
-                            |
-                            <a href="/User/Detail?id=@item.Id">Chi Tiết</a>
-                            |
-                            <a href="/User/Delete?id=@item.Id"> Xóa</a>
-                        </td>
-                        
-                    </tr>
-}
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.UserName</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Email</td>
+                            <td>@item.Dob</td>
+                            <td>
+                                <a href="/User/Edit?id=@item.Id">Sửa</a>
+                                |
+                                <a href="/User/Detail?id=@item.Id">Chi Tiết</a>
+                                |
+                                <a href="/User/Delete?id=@item.Id"> Xóa</a>
+                            </td>
+
+                        </tr>
+                    }
 
                 </tbody>
             </table>
-            @*@Html.PagedListPager(Model, Page => Url.Action("Danhsach", new { Page }));*@
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>

@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music_2.ApiIntegration;
 using Music_2.ApiIntegration.Role;
 using Music_2.ApiIntegration.User;
+using Music_2.Data.EF;
 using Music_2.Data.Models.User;
 using Music_2.FrontAdmin.Hubs;
 using Music_2.FrontAdmin.Services;
@@ -34,6 +36,9 @@ namespace Music_2.FrontAdmin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+            //khai bao db tu appsettings
+            services.AddDbContext<OnlineMusicDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSignalR(cfg => cfg.EnableDetailedErrors = true);
