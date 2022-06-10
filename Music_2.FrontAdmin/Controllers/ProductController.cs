@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Music_2.ApiIntegration.Category;
 using Music_2.ApiIntegration.Product;
@@ -29,7 +30,7 @@ namespace Music_2.FrontAdmin.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        /*public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -57,7 +58,7 @@ namespace Music_2.FrontAdmin.Controllers
                 ViewBag.SuccessMsg = TempData["result"];
             }
             return View(data);
-        }*/
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -83,7 +84,7 @@ namespace Music_2.FrontAdmin.Controllers
             return View(request);
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> CategoryAssign(int id)
         {
             var roleAssignRequest = await GetCategoryAssignRequest(id);
@@ -108,7 +109,7 @@ namespace Music_2.FrontAdmin.Controllers
             var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
 
             return View(roleAssignRequest);
-        }*/
+        }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -147,7 +148,7 @@ namespace Music_2.FrontAdmin.Controllers
             return View(request);
         }
 
-        /*private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -164,7 +165,7 @@ namespace Music_2.FrontAdmin.Controllers
                 });
             }
             return categoryAssignRequest;
-        }*/
+        }
 
         [HttpGet]
         public IActionResult Delete(int id)
