@@ -37,6 +37,29 @@ namespace Music_2.BackApi.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = cateId }, cate);
         }
+        [HttpPut("{cateId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromRoute] int cateId, [FromForm] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            request.Id = cateId;
+            var affectedResult = await _categoryService.Update(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpDelete("{cateId}")]
+        public async Task<IActionResult> Delete(int cateId)
+        {
+            var affectedResult = await _categoryService.Delete(cateId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
 
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll(string languageId)
@@ -52,6 +75,12 @@ namespace Music_2.BackApi.Controllers
             if (product == null)
                 return BadRequest("Cannot find category");
             return Ok(product);
+        }
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoriesPagingRequest request)
+        {
+            var products = await _categoryService.GetAllPaging(request);
+            return Ok(products);
         }
     }
 }

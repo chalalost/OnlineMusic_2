@@ -136,7 +136,7 @@ namespace Music_2.BackApi.Services.User
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             /*await new EmailSender().SendEmailAsync(Email, "Confirm your email"
                 , $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");*/
-            await new EmailSender().SendEmailAsync(request.Email, "Confirm your email"
+            await new EmailSender().SendEmailAsync(request.Email, "Hãng Đĩa Thời Đại | Time Records"
                 , $"Please confirm your account by <a href=''>clicking here</a>.");
             var end = await _userManager.ConfirmEmailAsync(user, token);
             if (end.Succeeded)
