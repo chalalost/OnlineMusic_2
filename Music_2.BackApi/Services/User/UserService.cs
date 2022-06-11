@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -134,10 +135,8 @@ namespace Music_2.BackApi.Services.User
             };
             var result = await _userManager.CreateAsync(user, request.Password);
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            /*await new EmailSender().SendEmailAsync(Email, "Confirm your email"
-                , $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");*/
-            await new EmailSender().SendEmailAsync(request.Email, "Hãng Đĩa Thời Đại | Time Records"
-                , $"Please confirm your account by <a href=''>clicking here</a>.");
+            await new EmailSender().SendEmailAsync(request.Email, "Wellcome to Time Records"
+                , $"You have successfully registered.");
             var end = await _userManager.ConfirmEmailAsync(user, token);
             if (end.Succeeded)
             {

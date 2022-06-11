@@ -19,7 +19,15 @@ namespace Music_2.BackApi.Services
             message.From = new MailAddress(fromMail);
             message.Subject = subject;
             message.To.Add(new MailAddress(email));
-            message.Body = "<html><body> " + htmlMessage + " </body></html>";
+            string htmlString = @"<html>
+                      <body>
+                      <h1>Hãng Đĩa Thời Đại | Time Records</h1>
+                      <p></p>"+
+                      "<p>" + htmlMessage + "</p>"+
+                      "<p>Sincerely thank for using our service<br>From Tú</br></p>" +
+                      "</body>"+
+                      "</html>";
+            message.Body = htmlString;
             message.IsBodyHtml = true;
 
             var smtpClient = new SmtpClient("smtp.gmail.com")

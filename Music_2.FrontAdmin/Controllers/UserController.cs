@@ -33,7 +33,7 @@ namespace Music_2.FrontAdmin.Controllers
             _roleApiClient = roleApiClient;
             _context = context;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 1)
         {
             var request = new GetUserPagingRequest()
             {

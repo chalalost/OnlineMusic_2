@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Danh sách người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts{
     <script>
@@ -66,7 +67,7 @@
 
                 </tbody>
             </table>
-           @* @await Component.InvokeAsync("Pager", Model)*@
+            <center>@await Component.InvokeAsync("Pager", Model)</center>
         </div>
     </div>
 </div>
