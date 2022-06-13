@@ -26,7 +26,7 @@
     <div class="card-header py-3">
         <form asp-action="Index" method="get" class="form-inline mr-auto w-100 navbar-search">
             <div class="input-group">
-                <input name="keyword" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                <input name="keyword" type="text" class="form-control bg-light border-0 small" value="@ViewBag.Keyword" placeholder="Search for..."
                        aria-label="Search" aria-describedby="basic-addon2" style="width:360px">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button">
@@ -52,7 +52,6 @@
                         <th>Tài khoản</th>
                         <th>Số điện thoại</th>
                         <th>Email</th>
-                        <th>Ngày sinh</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -65,7 +64,6 @@
                             <td>@item.UserName</td>
                             <td>@item.PhoneNumber</td>
                             <td>@item.Email</td>
-                            <td>@item.Dob</td>
                             <td>
                                 <a href="/User/Edit?id=@item.Id">Sửa</a>
                                 |

@@ -6,10 +6,6 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\css\chat.css" />
-    <Content Remove="wwwroot\css\jquery-ui.css" />
-    <Content Remove="wwwroot\css\main.css" />
-    <Content Remove="wwwroot\css\res.css" />
-    <Content Remove="wwwroot\css\util.css" />
     <Content Remove="wwwroot\js\app.js" />
     <Content Remove="wwwroot\js\chat.js" />
     <Content Remove="wwwroot\js\jquery-ui.js" />
@@ -1882,10 +1878,6 @@
     <None Include="wwwroot\bootstrap.min.css" />
     <None Include="wwwroot\bootstrap.min.css.map" />
     <None Include="wwwroot\css\chat.css" />
-    <None Include="wwwroot\css\jquery-ui.css" />
-    <None Include="wwwroot\css\main.css" />
-    <None Include="wwwroot\css\res.css" />
-    <None Include="wwwroot\css\util.css" />
     <None Include="wwwroot\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <None Include="wwwroot\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
     <None Include="wwwroot\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
