@@ -84,7 +84,7 @@ namespace Music_2.BackApi.Services.User
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.UserName.Contains(request.Keyword)
-                 || x.PhoneNumber.Contains(request.Keyword));
+                 || x.PhoneNumber.Contains(request.Keyword) || x.Email.Contains(request.Keyword) || x.Name.Contains(request.Keyword));
             }
 
             //3. Paging

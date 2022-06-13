@@ -145,16 +145,6 @@ namespace Music_2.Front.Hubs
                 return _Connections.Where(u => u.CurrentRoom == roomName).ToList();
             }
 
-
-            private string GetDevice()
-            {
-                var device = Context.GetHttpContext().Request.Headers["Device"].ToString();
-                if (!string.IsNullOrEmpty(device) && (device.Equals("Desktop") || device.Equals("Mobile")))
-                    return device;
-
-                return "Web";
-            }
-
         }
     }
 }

@@ -48,7 +48,7 @@
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
                                     <form class="user" asp-action="Index" asp-controller="Login" method="post">
-                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
                                             <input class="form-control form-control-user", autofocus="autofocus" asp-for="UserName" type="text" placeholder="Username" />
                                         </div>

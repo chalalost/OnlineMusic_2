@@ -35,6 +35,7 @@ namespace Music_2.BackApi.Services
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
+            if(request.Password == null) return new ApiErrorResult<string>("Sai mật khẩu");
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, request.RememberMe);
             if (!result.Succeeded)
             {
