@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Music_2.ApiIntegration.Category;
+using Music_2.Data.EF;
 using Music_2.Data.Entities;
 using Music_2.Data.Models.Catalog.Categories;
 using Music_2.Data.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Music_2.FrontAdmin.Controllers
@@ -16,11 +18,13 @@ namespace Music_2.FrontAdmin.Controllers
     {
         private readonly ICategoryApiClient _categoryApiClient;
         private readonly IConfiguration _configuration;
+        private readonly OnlineMusicDbContext _context;
 
-        public CategoriesController(ICategoryApiClient categoryApiClient, IConfiguration configuration)
+        public CategoriesController(ICategoryApiClient categoryApiClient, IConfiguration configuration, OnlineMusicDbContext context)
         {
             _categoryApiClient = categoryApiClient;
             _configuration = configuration;
+            _context = context;
         }
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -127,6 +131,20 @@ namespace Music_2.FrontAdmin.Controllers
 
             ModelState.AddModelError("", "Xóa không thành công");
             return View(request);
+        }
+
+        //export
+        public IActionResult ExportCsv()
+        {
+            var users = _context.Categories.ToList();
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,Name");
+            foreach (var user in users)
+            {
+                builder.AppendLine($"{user.Id},{user.Name}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "users.csv");
         }
     }
 }

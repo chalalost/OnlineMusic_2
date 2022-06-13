@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Music_2.ApiIntegration.Category;
 using Music_2.ApiIntegration.Product;
+using Music_2.Data.EF;
 using Music_2.Data.Models.Catalog.Products;
 using Music_2.Data.Models.CommonApi;
 using Music_2.Data.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Music_2.FrontAdmin.Controllers
@@ -18,16 +20,17 @@ namespace Music_2.FrontAdmin.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
-
+        private readonly OnlineMusicDbContext _context;
         private readonly ICategoryApiClient _categoryApiClient;
 
         public ProductController(IProductApiClient productApiClient,
             IConfiguration configuration,
-            ICategoryApiClient categoryApiClient)
+            ICategoryApiClient categoryApiClient, OnlineMusicDbContext context)
         {
             _configuration = configuration;
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
+            _context = context;
         }
 
         public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
@@ -191,6 +194,20 @@ namespace Music_2.FrontAdmin.Controllers
 
             ModelState.AddModelError("", "Xóa không thành công");
             return View(request);
+        }
+
+        //export
+        public IActionResult ExportCsv()
+        {
+            var products = _context.Products.ToList();
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,Name,Price,OriginalPrice,Stock,ViewCount");
+            foreach (var product in products)
+            {
+                builder.AppendLine($"{product.Id},{product.Name},{product.Price},{product.OriginalPrice},{product.Stock},{product.ViewCount}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "users.csv");
         }
     }
 }

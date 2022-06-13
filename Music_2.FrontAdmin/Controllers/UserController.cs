@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Music_2.FrontAdmin.Controllers
@@ -195,93 +196,17 @@ namespace Music_2.FrontAdmin.Controllers
         }
 
         //export
-        private DataTable GetUsersDetail()
+        public IActionResult ExportCsv()
         {
             var users = _context.Users.ToList();
-
-            DataTable dtUser = new DataTable("Users");
-            dtUser.Columns.AddRange(new DataColumn[6] { new DataColumn("ID"),
-                                            new DataColumn("UserName"),
-                                            new DataColumn("Name"),
-                                            new DataColumn("Dob"),
-                                            new DataColumn("Email"),
-                                            new DataColumn("PhoneNumber")});
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,Name,Dob,Email,PhoneNumber");
             foreach (var user in users)
             {
-                dtUser.Rows.Add(user.Id, user.UserName, user.Name, user.Dob, user.Email, user.PhoneNumber);
+                builder.AppendLine($"{user.Id},{user.Name},{user.Dob},{user.Email},{user.PhoneNumber}");
             }
 
-            return dtUser;
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "users.csv");
         }
-
-        [HttpPost]
-        public IActionResult Export()
-        {
-            var dictioneryexportType = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
-            var exportType = dictioneryexportType["Export"];
-            var user = GetUsersDetail();
-            switch (exportType)
-            {
-                case "Excel":
-                    ExportToExcel(user);
-                    break;
-                    /*case "Csv":
-                        ExportToCsv(user);
-                        break;
-                    case "Pdf":
-                        ExportToPdf(user);
-                        break;
-                    case "Word":
-                        ExportToWord(user);
-                        break;
-                    case "Json":
-                        ExportToJson(user);
-                        break;
-                    case "Xml":
-                        ExportToXML(user);
-                        break;
-                    case "Text":
-                        ExportToText(user);
-                        break;*/
-            }
-            return null;
-        }
-        private void ExportToExcel(DataTable user)
-        {
-            using (var workbook = new XLWorkbook())
-            {
-                var worksheet = workbook.Worksheets.Add("Users");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "ID";
-                worksheet.Cell(currentRow, 2).Value = "UserName";
-                worksheet.Cell(currentRow, 3).Value = "Name";
-                worksheet.Cell(currentRow, 4).Value = "Dob";
-                worksheet.Cell(currentRow, 5).Value = "Email";
-                worksheet.Cell(currentRow, 6).Value = "PhoneNumber";
-
-                for (int i = 0; i < user.Rows.Count; i++)
-                {
-                    {
-                        currentRow++;
-                        worksheet.Cell(currentRow, 1).Value = user.Rows[i]["ID"];
-                        worksheet.Cell(currentRow, 2).Value = user.Rows[i]["UserName"];
-                        worksheet.Cell(currentRow, 3).Value = user.Rows[i]["Name"];
-                        worksheet.Cell(currentRow, 4).Value = user.Rows[i]["Dob"];
-                        worksheet.Cell(currentRow, 5).Value = user.Rows[i]["Email"];
-                        worksheet.Cell(currentRow, 6).Value = user.Rows[i]["PhoneNumber"];
-
-                    }
-                }
-                using var stream = new MemoryStream();
-                workbook.SaveAs(stream);
-                var content = stream.ToArray();
-                Response.Clear();
-                Response.Headers.Add("content-disposition", "attachment;filename=Users.xls");
-                Response.ContentType = "application/xls";
-                Response.Body.WriteAsync(content);
-                Response.Body.Flush();
-            }
-        }
-
     }
 }
