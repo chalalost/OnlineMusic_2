@@ -143,8 +143,8 @@ namespace Music_2.FrontAdmin.Controllers
             {
                 builder.AppendLine($"{user.Id},{user.Name}");
             }
-
-            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "users.csv");
+            var name = "categories";
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{name}.csv");
         }
     }
 }

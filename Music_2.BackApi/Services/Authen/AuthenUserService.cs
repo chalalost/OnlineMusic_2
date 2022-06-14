@@ -33,6 +33,8 @@ namespace Music_2.BackApi.Services
         
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
+            if(request.UserName == null) return new ApiErrorResult<string>("Vui lòng điền tài khoản");
+            if (request.Password == null) return new ApiErrorResult<string>("Vui lòng điền mật khẩu");
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
             if(request.Password == null) return new ApiErrorResult<string>("Sai mật khẩu");

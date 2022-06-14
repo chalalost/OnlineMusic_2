@@ -13,26 +13,28 @@ namespace Music_2.BackApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class RolesController : ControllerBase
+    public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;
 
-        public RolesController(IRoleService roleService)
+        public RoleController(IRoleService roleService)
         {
             _roleService = roleService;
         }
-        [HttpGet("getroles")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var roles = await _roleService.GetAllRole();
             return Ok(roles);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreaterRole(RoleRequest request)
         {
             var result = await _roleService.Register(request);
             return Ok();
         }
+
         [HttpDelete]
         public async Task<IActionResult> Remove(RemoveRoleRequest request)
         {

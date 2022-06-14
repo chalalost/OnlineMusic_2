@@ -206,8 +206,8 @@ namespace Music_2.FrontAdmin.Controllers
             {
                 builder.AppendLine($"{product.Id},{product.Name},{product.Price},{product.OriginalPrice},{product.Stock},{product.ViewCount}");
             }
-
-            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "users.csv");
+            var name = "products";
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{name}.csv");
         }
     }
 }
