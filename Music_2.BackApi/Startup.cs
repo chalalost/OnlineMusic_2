@@ -21,6 +21,7 @@ using Music_2.BackApi.Services;
 using Music_2.BackApi.Services.Category;
 using Music_2.BackApi.Services.Common;
 using Music_2.BackApi.Services.FeedBack;
+using Music_2.BackApi.Services.Language;
 using Music_2.BackApi.Services.Order;
 using Music_2.BackApi.Services.Product;
 using Music_2.BackApi.Services.Role;
@@ -138,8 +139,8 @@ namespace Music_2.BackApi
             services.AddTransient<IFeedBackService, FeedBackService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ISingerService, SingerService>();
+            services.AddTransient<ILanguageService, LanguageService>();
 
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

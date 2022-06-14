@@ -22,7 +22,7 @@ namespace Music_2.ApiIntegration.Language
 
         public async Task<ApiResult<List<LanguageViewModel>>> GetAll()
         {
-            return await GetAsync<ApiResult<List<LanguageViewModel>>>("/api/languages");
+            return await GetAsync<ApiResult<List<LanguageViewModel>>>("/api/language");
         }
     }
 }

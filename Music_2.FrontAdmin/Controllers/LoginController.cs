@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Music_2.ApiIntegration;
 using Music_2.Data.Models;
+using Music_2.Data.Models.Utils;
 using Music_2.FrontAdmin.Services;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,8 @@ namespace Music_2.FrontAdmin.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = true
             };
-            HttpContext.Session.SetString("Token", token.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, token.ResultObj);
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
