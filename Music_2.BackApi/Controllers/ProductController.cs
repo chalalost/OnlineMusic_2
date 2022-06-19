@@ -75,6 +75,7 @@ namespace Music_2.BackApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
 
+
         [HttpPut("{productId}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)

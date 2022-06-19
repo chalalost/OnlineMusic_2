@@ -48,21 +48,21 @@ namespace Music_2.FrontAdmin.Controllers
         {
             return View();
         }
-
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create(CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
             var result = await _categoryApiClient.Create(request);
-            if (result.IsSuccessed)
+            if (result)
             {
-                TempData["result"] = "Thêm mới danh mục thành công";
+                TempData["result"] = "Thêm mới danh mục sản phẩm thành công";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", result.Message);
+            ModelState.AddModelError("", "Thêm danh mục sản phẩm thất bại");
             return View(request);
         }
 
@@ -81,7 +81,7 @@ namespace Music_2.FrontAdmin.Controllers
             };
             return View(editVm);
         }
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Edit(CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -96,7 +96,8 @@ namespace Music_2.FrontAdmin.Controllers
 
             ModelState.AddModelError("", result.Message);
             return View(request);
-        }*/
+        }
+
         [HttpGet]
         public IActionResult Delete(int id)
         {

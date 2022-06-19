@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Music_2.Data.Models;
 using Music_2.Data.Models.Catalog.Categories;
 using Music_2.Data.Models.CommonApi;
+using Music_2.Data.Models.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,21 +25,28 @@ namespace Music_2.ApiIntegration.Category
                     IConfiguration configuration)
             : base(httpClientFactory, httpContextAccessor, configuration)
         {
+            _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<ApiResult<bool>> Create(CategoryCreateRequest request)
+        public async Task<bool> Create(CategoryCreateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-            var response = await client.PostAsync($"/api/categories", httpContent);
-            var result = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+            var requestContent = new MultipartFormDataContent();
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoDescription) ? "" : request.SeoDescription.ToString()), "seoDescription");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoTitle) ? "" : request.SeoTitle.ToString()), "seoTitle");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.LanguageId) ? "" : request.LanguageId.ToString()), "languageId");
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            var response = await client.PostAsync($"/api/categories/", requestContent);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<CategoryViewModel>> GetAll(string languageId)

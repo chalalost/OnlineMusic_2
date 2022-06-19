@@ -11,7 +11,7 @@ namespace Music_2.ApiIntegration.Category
 {
     public interface ICategoryApiClient
     {
-        Task<ApiResult<bool>> Create(CategoryCreateRequest request);
+        Task<bool> Create(CategoryCreateRequest request);
         Task<List<CategoryViewModel>> GetAll(string languageId);
         Task<PagedResult<CategoryViewModel>> GetAllPaging(GetCategoriesPagingRequest request);
 

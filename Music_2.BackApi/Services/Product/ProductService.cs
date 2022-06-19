@@ -76,7 +76,7 @@ namespace Music_2.BackApi.Services.Product
                         LanguageId = request.LanguageId
                     });
                 }
-                else
+                /*else
                 {
                     translations.Add(new ProductTranslation()
                     {
@@ -85,7 +85,7 @@ namespace Music_2.BackApi.Services.Product
                         SeoAlias = SystemConstants.ProductConstants.NA,
                         LanguageId = language.Id
                     });
-                }
+                }*/
             }
             var product = new Data.Entities.Product()
             {

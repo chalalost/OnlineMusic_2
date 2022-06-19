@@ -61,11 +61,11 @@ namespace Music_2.BackApi.Controllers
             return Ok();
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll(string languageId)
         {
-            var cates = await _categoryService.GetAll(languageId);
-            return Ok(cates);
+            var cate = await _categoryService.GetAll(languageId);
+            return Ok(cate);
         }
 
         [HttpGet("{cateId}/{languageId}")]
