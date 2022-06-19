@@ -5,7 +5,9 @@ namespace Music_2.Data.Models.Catalog.Products
 {
     public class ProductCreateRequest
     {
+        [Required(ErrorMessage = "Bạn phải nhập giá sản phẩm")]
         public decimal Price { set; get; }
+        [Required(ErrorMessage = "Bạn phải nhập giá sản phẩm gốc")]
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
 
@@ -18,6 +20,7 @@ namespace Music_2.Data.Models.Catalog.Products
         public string SeoTitle { set; get; }
 
         public string SeoAlias { get; set; }
+        [Required(ErrorMessage = "Bạn phải nhập id ngôn ngữ")]
         public string LanguageId { set; get; }
 
         public bool? IsFeatured { get; set; }

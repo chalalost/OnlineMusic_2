@@ -40,7 +40,8 @@ namespace Music_2.FrontAdmin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                ModelState.AddModelError("", "");
+                return View(request);
             }
             var token = await _userApiClient.Authenticate(request);
             if (token.ResultObj == null)

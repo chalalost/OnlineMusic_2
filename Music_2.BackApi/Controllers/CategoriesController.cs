@@ -71,16 +71,17 @@ namespace Music_2.BackApi.Controllers
         [HttpGet("{cateId}/{languageId}")]
         public async Task<IActionResult> GetById(int cateId, string languageId)
         {
-            var product = await _categoryService.GetById(languageId, cateId);
-            if (product == null)
+            var cate = await _categoryService.GetById(languageId, cateId);
+            if (cate == null)
                 return BadRequest("Cannot find category");
-            return Ok(product);
+            return Ok(cate);
         }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetCategoriesPagingRequest request)
         {
-            var products = await _categoryService.GetAllPaging(request);
-            return Ok(products);
+            var cate = await _categoryService.GetAllPaging(request);
+            return Ok(cate);
         }
     }
 }

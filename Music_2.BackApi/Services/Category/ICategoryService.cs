@@ -48,7 +48,7 @@ namespace Music_2.BackApi.Services.Category
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<ApiResult<PagedResult<CategoryViewModel>>> GetAllPaging(GetCategoriesPagingRequest request);
+        Task<PagedResult<CategoryViewModel>> GetAllPaging(GetCategoriesPagingRequest request);
         
     }
 }

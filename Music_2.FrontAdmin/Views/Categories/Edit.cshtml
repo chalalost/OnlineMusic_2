@@ -1,0 +1,55 @@
+﻿@model Music_2.Data.Models.Catalog.Categories.CategoryUpdateRequest
+
+@{
+    ViewData["Title"] = "Sửa thông tin danh mục";
+}
+<div class="form-horizontal">
+    <h4>Sửa thông tin danh mục sản phẩm</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SeoDescription" class="control-label"></label>
+                    <input asp-for="SeoDescription" class="form-control" />
+                    <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SeoTitle" class="control-label"></label>
+                    <input asp-for="SeoTitle" class="form-control" />
+                    <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SeoAlias" class="control-label"></label>
+                    <input asp-for="SeoAlias" class="form-control" />
+                    <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsFeatured, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IsFeatured, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsFeatured, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="  Save  " class="btn btn-success btn-icon-split" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">← Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

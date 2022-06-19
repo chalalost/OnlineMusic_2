@@ -35,7 +35,7 @@ namespace Music_2.ApiIntegration
                 .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
@@ -56,7 +56,7 @@ namespace Music_2.ApiIntegration
                .Session
                .GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var response = await client.GetAsync(url);
@@ -76,7 +76,7 @@ namespace Music_2.ApiIntegration
                .Session
                .GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var response = await client.DeleteAsync(url);

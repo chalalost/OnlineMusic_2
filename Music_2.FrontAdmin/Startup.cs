@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music_2.ApiIntegration;
+using Music_2.ApiIntegration.Category;
+using Music_2.ApiIntegration.Language;
 using Music_2.ApiIntegration.Role;
 using Music_2.ApiIntegration.User;
 using Music_2.Data.EF;
@@ -47,12 +49,25 @@ namespace Music_2.FrontAdmin
                 {
                     options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/User/Forbiden";
+                    
                 });
+            services.AddAuthorization(options =>
+            {
+
+                options.AddPolicy("Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Admin");
+                    });
+
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
 
             services.AddSession(options =>
             {

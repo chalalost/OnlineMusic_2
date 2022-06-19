@@ -45,32 +45,21 @@ namespace Music_2.ApiIntegration.Category
         {
             return await GetListAsync<CategoryViewModel>("/api/categories?languageId=" + languageId);
         }
-        public async Task<ApiResult<PagedResult<CategoryViewModel>>> GetAllPaging(GetCategoriesPagingRequest request)
+        public async Task<PagedResult<CategoryViewModel>> GetAllPaging(GetCategoriesPagingRequest request)
         {
-            var client = _httpClientFactory.CreateClient();
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var data = await GetAsync<PagedResult<CategoryViewModel>>(
+                $"/api/categories/paging?pageIndex={request.PageIndex}" +
+                $"&pageSize={request.PageSize}" +
+                $"&keyword={request.Keyword}&languageId={request.LanguageId}");
 
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/categories/paging?pageIndex=" +
-                $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
-            var body = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<CategoryViewModel>>>(body);
-            return users;
+            return data;
         }
 
-        public async Task<ApiResult<CategoryViewModel>> GetById(string languageId, int id)
+        public async Task<CategoryViewModel> GetById(string languageId, int id)
         {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/categories/{id}/{languageId}");
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<CategoryViewModel>>(body);
+            var data = await GetAsync<CategoryViewModel>($"/api/categories/{id}/{languageId}");
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<CategoryViewModel>>(body);
+            return data;
         }
         public async Task<ApiResult<bool>> Update(int id, CategoryUpdateRequest request)
         {

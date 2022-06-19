@@ -34,7 +34,7 @@ namespace Music_2.FrontAdmin.Controllers.Components
             });
             var navigationVm = new NavigationViewModel()
             {
-                CurrentLanguageId = currentLanguageId,
+                LanguageId = currentLanguageId,
                 Languages = items.ToList()
             };
 

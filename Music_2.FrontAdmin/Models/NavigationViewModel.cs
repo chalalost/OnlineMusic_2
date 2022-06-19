@@ -10,7 +10,7 @@ namespace Music_2.FrontAdmin.Models
     {
         public List<SelectListItem> Languages { get; set; }
 
-        public string CurrentLanguageId { get; set; }
+        public string LanguageId { get; set; }
 
         public string ReturnUrl { set; get; }
     }

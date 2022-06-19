@@ -94,7 +94,7 @@ namespace Music_2.BackApi.Services.Category
                 Status = x.c.Status
             }).FirstOrDefaultAsync();
         }
-        public async Task<ApiResult<PagedResult<CategoryViewModel>>> GetAllPaging(GetCategoriesPagingRequest request)
+        public async Task<PagedResult<CategoryViewModel>> GetAllPaging(GetCategoriesPagingRequest request)
         {
             var query = from c in _context.Categories
                         join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
@@ -127,7 +127,7 @@ namespace Music_2.BackApi.Services.Category
                 PageSize = request.PageSize,
                 Items = data
             };
-            return new ApiSuccessResult<PagedResult<CategoryViewModel>>(pagedResult);
+            return pagedResult;
         }
         public async Task<int> Update(CategoryUpdateRequest request)
         {

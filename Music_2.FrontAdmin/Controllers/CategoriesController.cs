@@ -26,12 +26,13 @@ namespace Music_2.FrontAdmin.Controllers
             _configuration = configuration;
             _context = context;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, string languageId, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetCategoriesPagingRequest()
             {
                 Keyword = keyword,
                 PageIndex = pageIndex,
+                LanguageId = languageId,
                 PageSize = pageSize
             };
             var data = await _categoryApiClient.GetAllPaging(request);
@@ -40,15 +41,8 @@ namespace Music_2.FrontAdmin.Controllers
             {
                 ViewBag.SuccessMsg = TempData["result"];
             }
-            return View(data.ResultObj);
+            return View(data);
         }
-        [HttpGet]
-        public async Task<IActionResult> Details(int id, string languageId)
-        {
-            var result = await _categoryApiClient.GetById(languageId,id);
-            return View(result.ResultObj);
-        }
-
         [HttpGet]
         public IActionResult Create()
         {
@@ -73,25 +67,21 @@ namespace Music_2.FrontAdmin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id, string languageId)
+        public async Task<IActionResult> Edit(int id)
         {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var result = await _categoryApiClient.GetById(languageId, id);
-            if (result.IsSuccessed)
+            var editVm = new CategoryUpdateRequest()
             {
-                var cate = result.ResultObj;
-                var editVm = new CategoryUpdateRequest()
-                {
-                    Id = cate.Id,
-                    Name = cate.Name,
-                    SeoAlias = cate.SeoAlias,
-                    SeoDescription = cate.SeoDescription,
-                    SeoTitle = cate.SeoTitle
-                };
-                return View(editVm);
-            }
-            return RedirectToAction("Error", "Home");
+                Id = result.Id,
+                Name = result.Name,
+                SeoAlias = result.SeoAlias,
+                SeoDescription = result.SeoDescription,
+                SeoTitle = result.SeoTitle
+            };
+            return View(editVm);
         }
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Edit(CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -100,13 +90,13 @@ namespace Music_2.FrontAdmin.Controllers
             var result = await _categoryApiClient.Update(request.Id, request);
             if (result.IsSuccessed)
             {
-                TempData["result"] = "Cập nhật người dùng thành công";
+                TempData["result"] = "Cập nhật danh mục thành công";
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", result.Message);
             return View(request);
-        }
+        }*/
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -125,7 +115,7 @@ namespace Music_2.FrontAdmin.Controllers
             var result = await _categoryApiClient.Delete(request.Id);
             if (result)
             {
-                TempData["result"] = "Xóa sản phẩm thành công";
+                TempData["result"] = "Xóa danh mục thành công";
                 return RedirectToAction("Index");
             }
 
