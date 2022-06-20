@@ -16,7 +16,7 @@ namespace Music_2.ApiIntegration.Category
         Task<PagedResult<CategoryViewModel>> GetAllPaging(GetCategoriesPagingRequest request);
 
         Task<CategoryViewModel> GetById(string languageId, int id);
-        Task<ApiResult<bool>> Update(int id, CategoryUpdateRequest request);
+        Task<bool> Update(CategoryUpdateRequest request);
         Task<bool> Delete(int id);
     }
 }

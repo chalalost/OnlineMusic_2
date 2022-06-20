@@ -131,11 +131,11 @@ namespace Music_2.BackApi.Services.Category
         }
         public async Task<int> Update(CategoryUpdateRequest request)
         {
-            var product = await _context.Categories.FindAsync(request.Id);
+            var cate = await _context.Categories.FindAsync(request.Id);
             var cateTranslations = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.CategoryId == request.Id
             && x.LanguageId == request.LanguageId);
 
-            if (product == null || cateTranslations == null) throw new OnlineMusicException($"Không tìm được danh mục id: {request.Id}");
+            if (cate == null || cateTranslations == null) throw new OnlineMusicException($"Không tìm được danh mục id: {request.Id}");
 
             cateTranslations.Name = request.Name;
             cateTranslations.SeoAlias = request.SeoAlias;

@@ -26,6 +26,7 @@ using Music_2.BackApi.Services.Order;
 using Music_2.BackApi.Services.Product;
 using Music_2.BackApi.Services.Role;
 using Music_2.BackApi.Services.Singer;
+using Music_2.BackApi.Services.Slide;
 using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
@@ -140,6 +141,7 @@ namespace Music_2.BackApi
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ISingerService, SingerService>();
             services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<ISlideService, SlideService>();
 
         }
 

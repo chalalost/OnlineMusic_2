@@ -69,23 +69,27 @@ namespace Music_2.ApiIntegration.Category
 
             return data;
         }
-        public async Task<ApiResult<bool>> Update(int id, CategoryUpdateRequest request)
+        public async Task<bool> Update(CategoryUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var requestContent = new MultipartFormDataContent();
 
-            var response = await client.PutAsync($"/api/categories/update/{id}", httpContent);
+            requestContent.Add(new StringContent(request.Id.ToString()), "id");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoDescription) ? "" : request.SeoDescription.ToString()), "seoDescription");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoTitle) ? "" : request.SeoTitle.ToString()), "seoTitle");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(languageId), "languageId");
+
+            var response = await client.PutAsync($"/api/categories/" + request.Id, requestContent);
             var result = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
-
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return response.IsSuccessStatusCode;
         }
         public async Task<bool> Delete(int id)
         {

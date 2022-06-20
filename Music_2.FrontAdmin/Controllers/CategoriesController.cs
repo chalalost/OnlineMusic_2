@@ -82,20 +82,21 @@ namespace Music_2.FrontAdmin.Controllers
             return View(editVm);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(CategoryUpdateRequest request)
+        public async Task<IActionResult> Edit([FromForm] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _categoryApiClient.Update(request.Id, request);
-            if (result.IsSuccessed)
+            var result = await _categoryApiClient.Update( request);
+            if (result)
             {
                 TempData["result"] = "Cập nhật danh mục thành công";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", result.Message);
+            ModelState.AddModelError("", "Cập nhật danh không mục thành công");
             return View(request);
+
         }
 
         [HttpGet]
