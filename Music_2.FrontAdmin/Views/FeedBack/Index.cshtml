@@ -1,0 +1,74 @@
+﻿@using Music_2.Data.Models.CommonApi
+@model PagedResult<Music_2.Data.Models.FeedBack.FeedBackViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
+<div class="d-sm-flex align-items-center justify-content-between">
+    <button class="btn btn-light" type="button">
+        <i class="fas fa-download fa-sm text-white-50"></i>
+        @Html.ActionLink(" Generate Report", "ExportCsv")
+    </button>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <form asp-action="Index" method="get" class="form-inline mr-auto w-100 navbar-search">
+            <div class="input-group">
+                <input name="keyword" type="text" class="form-control bg-light border-0 small" value="@ViewBag.Keyword" placeholder="Search email for..."
+                       aria-label="Search" aria-describedby="basic-addon2" style="width:360px">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" onclick="/FeedBack/Index" class="btn"> Reset </button>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Content</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.CreateDate</td>
+                            <td>@item.Email</td>
+                            <td>@item.Content</td>
+                            <td>
+                                <a href="/FeedBack/Delete?id=@item.ID"> Xóa</a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <center>@await Component.InvokeAsync("Pager", Model)</center>
+        </div>
+    </div>
+</div>

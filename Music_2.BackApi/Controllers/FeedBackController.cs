@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Music_2.BackApi.Services.FeedBack;
+using Music_2.Data.Models.FeedBack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class FeedBackController : ControllerBase
     {
         private readonly IFeedBackService _fbService;
@@ -20,11 +20,34 @@ namespace Music_2.BackApi.Controllers
             _fbService = fbService;
         }
 
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAll()
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] FeedBackCreateRequest request)
         {
-            var orders = await _fbService.GetAll();
-            return Ok(orders);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _fbService.Create(request);
+            if (result == 0)
+                return BadRequest();
+            return Ok(result);
+        }
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetFeedBackPagingRequest request)
+        {
+            var fb = await _fbService.GetAllPaging(request);
+            return Ok(fb);
+        }
+
+        [HttpDelete("{cateId}")]
+        public async Task<IActionResult> Delete(long cateId)
+        {
+            var affectedResult = await _fbService.Delete(cateId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
         }
     }
 }

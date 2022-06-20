@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,14 @@ namespace Music_2.Front
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Login/Index/";
+                    options.AccessDeniedPath = "/User/Forbiden";
+
+                });
 
             //khai bao services
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

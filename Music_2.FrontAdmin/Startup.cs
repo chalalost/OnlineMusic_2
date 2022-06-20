@@ -11,9 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music_2.ApiIntegration;
 using Music_2.ApiIntegration.Category;
+using Music_2.ApiIntegration.FeedBack;
 using Music_2.ApiIntegration.Language;
 using Music_2.ApiIntegration.Product;
 using Music_2.ApiIntegration.Role;
+using Music_2.ApiIntegration.Slide;
 using Music_2.ApiIntegration.User;
 using Music_2.Data.EF;
 using Music_2.Data.Models.User;
@@ -70,6 +72,8 @@ namespace Music_2.FrontAdmin
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+            services.AddTransient<IFeedBackApiClient, FeedBackApiClient>();
 
             services.AddSession(options =>
             {

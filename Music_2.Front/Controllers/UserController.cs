@@ -32,7 +32,7 @@ namespace Music_2.Front.Controllers
 
         // GET: User
         [HttpGet]
-        public ActionResult Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -40,67 +40,53 @@ namespace Music_2.Front.Controllers
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             if (!ModelState.IsValid)
-            {
-                return View(registerRequest);
-            }
+                return View();
 
             var result = await _userApiClient.RegisterUser(registerRequest);
-            if (!result.IsSuccessed)
+            if (result.IsSuccessed)
             {
-                ModelState.AddModelError("", result.Message);
-                return View();
+                TempData["result"] = "Đăng ký thành công";
+                return RedirectToAction("Index");
             }
-            var loginResult = await _userApiClient.Authenticate(new LoginRequest()
-            {
-                UserName = registerRequest.UserName,
-                Password = registerRequest.Password,
-                RememberMe = true
-            });
 
-            var userPrincipal = this.ValidateToken(loginResult.ResultObj);
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
-            };
-            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, loginResult.ResultObj);
-            await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal,
-                        authProperties);
-
-            return RedirectToAction("Success", "Home");
+            ModelState.AddModelError("", result.Message);
+            return View(registerRequest);
+            return RedirectToAction("Login", "User");
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return View(request);
-
-            var result = await _userApiClient.Authenticate(request);
-            if (result.ResultObj == null)
             {
-                ModelState.AddModelError("", "Login failure");
+                ModelState.AddModelError("", "");
+                return View(request);
+            }
+            var token = await _userApiClient.Authenticate(request);
+            if (token.ResultObj == null)
+            {
+                ModelState.AddModelError("", token.Message);
                 return View();
             }
-            var userPrincipal = this.ValidateToken(result.ResultObj);
-            var authProperties = new AuthenticationProperties
+            var userPrincipal = this.ValidateToken(token.ResultObj);
+            var authProperties = new AuthenticationProperties()
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
+                IsPersistent = true
             };
-            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, token.ResultObj);
             await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal,
-                        authProperties);
-
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                userPrincipal,
+                authProperties
+                );
             return RedirectToAction("Index", "Home");
         }
 
