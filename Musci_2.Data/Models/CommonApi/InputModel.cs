@@ -11,7 +11,7 @@ namespace Music_2.Data.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Nhập chính xác địa chỉ email")]
+        [Display(Name = "Nhập chính xác địa chỉ email!")]
         public string Email { get; set; }
     }
 }

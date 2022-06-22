@@ -18,9 +18,7 @@ namespace Music_2.Data.Models.Cart
         public string ShipEmail { set; get; }
         public string ShipPhoneNumber { set; get; }
         public OrderStatus Status { set; get; }
-
         public List<OrderDetail> OrderDetails { get; set; }
-
         public string UserName { get; set; }
     }
 }

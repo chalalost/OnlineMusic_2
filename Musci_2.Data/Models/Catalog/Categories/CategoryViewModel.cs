@@ -10,9 +10,7 @@ namespace Music_2.Data.Models.Catalog.Categories
     public class CategoryViewModel
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public int? ParentId { get; set; }
         public string SeoDescription { set; get; }
         public string SeoTitle { set; get; }

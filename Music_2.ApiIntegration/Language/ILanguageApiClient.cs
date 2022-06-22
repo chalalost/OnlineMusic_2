@@ -10,6 +10,10 @@ namespace Music_2.ApiIntegration.Language
 {
     public interface ILanguageApiClient
     {
+        /// <summary>
+        /// api lấy ds ngôn ngữ
+        /// </summary>
+        /// <returns></returns>
         Task<ApiResult<List<LanguageViewModel>>> GetAll();
     }
 }

@@ -13,7 +13,6 @@ namespace Music_2.Data.Models.Singer
         public string MetaTitle { get; set; }
         public string Desciption { get; set; }
         public string Image { get; set; }
-
         public long? CategoryID { get; set; }
         public string Meta { get; set; }
         public string Code { get; set; }

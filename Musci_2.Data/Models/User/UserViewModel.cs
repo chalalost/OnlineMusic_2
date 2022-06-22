@@ -9,7 +9,6 @@ namespace Music_2.Data.Models
 {
     public class UserViewModel
     {
-        
         public Guid Id { get; set; }
         [Display(Name = "Name")]
         public string Name { get; set; }

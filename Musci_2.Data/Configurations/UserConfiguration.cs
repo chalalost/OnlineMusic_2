@@ -16,7 +16,6 @@ namespace Music_2.Data.Configurations
             builder.ToTable("Users");
             builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Dob).IsRequired();
-
         }
     }
 }

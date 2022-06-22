@@ -11,13 +11,18 @@ namespace Music_2.ApiIntegration.Order
 {
     public class OrderApiClient : BaseApiClient, IOrderApiClient
     {
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public OrderApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
             : base(httpClientFactory, httpContextAccessor, configuration)
         {
-
-
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+            _httpClientFactory = httpClientFactory;
         }
+
     }
 }

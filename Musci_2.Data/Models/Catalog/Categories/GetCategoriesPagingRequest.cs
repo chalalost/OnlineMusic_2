@@ -10,7 +10,6 @@ namespace Music_2.Data.Models.Catalog.Categories
     public class GetCategoriesPagingRequest : PagingRequestBase
     {
         public string Keyword { get; set; }
-
         public string LanguageId { get; set; }
     }
 }

@@ -119,19 +119,15 @@ namespace Music_2.Front
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .SetIsOriginAllowed(origin => true)
                 .AllowCredentials());
-
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseSession();
             app.UseRequestLocalization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalR>("/signalr");

@@ -1,9 +1,7 @@
-﻿
-@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
-@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
-@{
+﻿@{
     var culture = CultureInfo.CurrentCulture.Name;
 }
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @{
     Layout = null;
 }

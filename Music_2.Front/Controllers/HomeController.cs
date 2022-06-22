@@ -15,13 +15,11 @@ namespace Music_2.Front.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ISlideApiClient _slideApiClient;
-
         public HomeController(ILogger<HomeController> logger, ISlideApiClient slideApiClient)
         {
             _logger = logger;
             _slideApiClient = slideApiClient;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -31,20 +29,15 @@ namespace Music_2.Front.Controllers
             var model = _slideApiClient.GetAll();
             return PartialView(model);
         }
-
         public IActionResult Privacy()
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
-
-
         public IActionResult SetCultureCookie(string cltr, string returnUrl)
         {
             Response.Cookies.Append(
@@ -52,7 +45,6 @@ namespace Music_2.Front.Controllers
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(cltr)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
-
             return LocalRedirect(returnUrl);
         }
     }

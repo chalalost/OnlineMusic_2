@@ -10,6 +10,10 @@ namespace Music_2.ApiIntegration.Role
 {
     public interface IRoleApiClient
     {
+        /// <summary>
+        /// api lấy ds rolde
+        /// </summary>
+        /// <returns></returns>
         Task<ApiResult<List<RoleViewModel>>> GetAll();
     }
 }

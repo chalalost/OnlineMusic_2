@@ -18,7 +18,6 @@ namespace Music_2.ApiIntegration.Role
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
         public RoleApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
@@ -27,7 +26,6 @@ namespace Music_2.ApiIntegration.Role
             _httpContextAccessor = httpContextAccessor;
             _httpClientFactory = httpClientFactory;
         }
-
         public async Task<ApiResult<List<RoleViewModel>>> GetAll()
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");

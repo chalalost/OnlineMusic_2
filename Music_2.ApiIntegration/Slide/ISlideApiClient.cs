@@ -10,7 +10,16 @@ namespace Music_2.ApiIntegration.Slide
 {
     public interface ISlideApiClient
     {
+        /// <summary>
+        /// api tạo mới slide
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         Task<bool> Create(SlideCreateRequest request);
+        /// <summary>
+        /// api lấy ds slide
+        /// </summary>
+        /// <returns></returns>
         Task<List<SlideViewModel>> GetAll();
     }
 }

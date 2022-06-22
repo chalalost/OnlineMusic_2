@@ -11,12 +11,10 @@ namespace Music_2.Data.Models.Utils
         public OnlineMusicException()
         {
         }
-
         public OnlineMusicException(string message)
             : base(message)
         {
         }
-
         public OnlineMusicException(string message, Exception inner)
             : base(message, inner)
         {

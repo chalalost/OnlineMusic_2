@@ -14,14 +14,10 @@ namespace Music_2.Data.Models
 
         public string Password { get; set; }
         [Required(ErrorMessage = "Bạn phải nhập email")]
-
         public string Email { get; set; }
-
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Bạn phải nhập tên người dùng")]
-
         public string Name { get; set; }
-
         public string Dob { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿@model List<Music_2.Data.Entities.Slide>
-
+﻿@model IEnumerable<Music_2.Data.Models.SlideViewModel>
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 
 
 <div class="item-slick1" style=" background-image: url('/wwwroot/images/slide-04.jpg');">
@@ -25,12 +25,12 @@
     </div>
 </div>
 
-@*@foreach (var item in Model)
-{
-    <div class="item-slick1" style="        background-image: url(@item.Image);">
-        <div class="container h-full">
-            <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-            </div>
+@foreach (var item in Model)
+    {
+<div class="item-slick1" style="        background-image: url(@(Configuration["BaseAddress"] + item.Image));">
+    <div class="container h-full">
+        <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
         </div>
     </div>
-}*@
+</div>
+    }

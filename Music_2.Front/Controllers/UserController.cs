@@ -22,14 +22,12 @@ namespace Music_2.Front.Controllers
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
-
         public UserController(IUserApiClient userApiClient,
             IConfiguration configuration)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
-
         // GET: User
         [HttpGet]
         public IActionResult Register()
@@ -41,19 +39,16 @@ namespace Music_2.Front.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-
             var result = await _userApiClient.RegisterUser(registerRequest);
             if (result.IsSuccessed)
             {
                 TempData["result"] = "Đăng ký thành công";
                 return RedirectToAction("Index");
             }
-
             ModelState.AddModelError("", result.Message);
             return View(registerRequest);
             return RedirectToAction("Login", "User");
         }
-
         [HttpGet]
         public async Task<IActionResult> Login()
         {
@@ -89,7 +84,6 @@ namespace Music_2.Front.Controllers
                 );
             return RedirectToAction("Index", "Home");
         }
-
         [HttpPost] 
         public async Task<IActionResult> Logout()
         {
@@ -103,15 +97,11 @@ namespace Music_2.Front.Controllers
 
             SecurityToken validatedToken;
             TokenValidationParameters validationParameters = new TokenValidationParameters();
-
             validationParameters.ValidateLifetime = true;
-
             validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
             validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
             validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-
             ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
-
             return principal;
         }
     }

@@ -31,14 +31,9 @@ namespace Music_2.ApiIntegration.Slide
         {
             var client = _httpClientFactory.CreateClient();
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
-
-            /*var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);*/
-
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
             var requestContent = new MultipartFormDataContent();
-
             if (request.Image != null)
             {
                 byte[] data;
@@ -49,11 +44,9 @@ namespace Music_2.ApiIntegration.Slide
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "image", request.Image.FileName);
             }
-
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Url) ? "" : request.Url.ToString()), "name");
-
             var response = await client.PostAsync($"/api/slide/", requestContent);
             return response.IsSuccessStatusCode;
         }
