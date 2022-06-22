@@ -45,7 +45,6 @@ namespace Music_2.BackApi.Services.Slide
             var query = _context.Slides;
             return await query.Select(x => new SlideViewModel()
             {
-                Id = x.Id,
                 Image = x.Image
             }).ToListAsync();
         }

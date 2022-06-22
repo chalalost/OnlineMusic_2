@@ -1,4 +1,9 @@
 ﻿
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
 @{
     Layout = null;
 }
@@ -50,15 +55,13 @@
         <div class="container-menu-desktop">
             <!-- Topbar -->
             <div class="top-bar">
-                @*<div class="content-topbar flex-sb-m h-full container">
-                    @{
-                        var sess = (OnlineMusic.Common.CustomerLogin)Session[OnlineMusic.Common.CommonConstants.CUSTOMER_SESSION];
-                    }
-                    @if (sess == null)
+                <div class="content-topbar flex-sb-m h-full container">
+                    @if (@User.Identity.Name == null)
                     {
                         <div class="left-top-bar">
-                            Free shipping for standard order over $100
-                        </div><div class="right-top-bar flex-w h-full">
+                            <localize>Free shipping for standard order over $100</localize>
+                        </div>
+                        <div class="right-top-bar flex-w h-full">
                             <a href="/dang-nhap" class="flex-c-m trans-04 p-lr-25 stext-109">
                                 Log In
                             </a>
@@ -66,41 +69,25 @@
                             <a href="/dang-ky" class="flex-c-m trans-04 p-lr-25 stext-109">
                                 Register
                             </a>
-
-
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                EN
-                            </a>
-
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                VN
-                            </a>
                         </div>
+
                     }
                     else
                     {
                         <div class="left-top-bar">
-                            Free shipping for standard order over $100
-
+                            <localize>Free shipping for standard order over $100</localize>
                         </div>
                         <div class="right-top-bar flex-w h-full">
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                Welcome back @sess.Name
+
+                            <a href="/User/Profile" class="flex-c-m trans-04 p-lr-25">
+                                Welcome back @User.Identity.Name
                             </a>
                             <a href="/thoat" class="flex-c-m trans-04 p-lr-25 stext-109">
                                 Log Out
                             </a>
-
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                EN
-                            </a>
-
-                            <a href="#" class="flex-c-m trans-04 p-lr-25">
-                                VN
-                            </a>
                         </div>
                     }
-                </div>*@
+                </div>
             </div>
 
             <div class="wrap-menu-desktop">
@@ -165,6 +152,9 @@
                         <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " @*data-notify="0"*@>
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
+                        <a class="dis-block cl2 hov-cl1 p-lr-25 stext-109" @*data-notify="0"*@>
+                            <language-nav cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { area="", cltr="{0}", returnUrl="{1}"})"></language-nav>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -175,7 +165,7 @@
             <!-- Logo moblie -->
             <div class="logo-mobile">
                 <a href="index.html"><img src="~/images/icons/logo-01.png" alt="IMG-LOGO"></a>
-                
+
             </div>
 
             <!-- Icon header -->
@@ -219,14 +209,6 @@
 
                         <a href="#" class="flex-c-m p-lr-10 trans-04">
                             My Account
-                        </a>
-
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            EN
-                        </a>
-
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            USD
                         </a>
                     </div>
                 </li>
@@ -707,5 +689,6 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     @RenderSection("jsFooter", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

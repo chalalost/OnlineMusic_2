@@ -29,12 +29,10 @@ namespace Music_2.BackApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _slideService.Create(request);
-            if (result == null)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
+            var affectedResult = await _slideService.Create(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
         }
 
         [HttpGet]

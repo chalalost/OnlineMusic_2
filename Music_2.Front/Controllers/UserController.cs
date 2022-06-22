@@ -90,7 +90,7 @@ namespace Music_2.Front.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
+        [HttpPost] 
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(
