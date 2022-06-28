@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-@using (Html.BeginForm("Create", "Slide"))
+@using (Html.BeginForm("Create", "Slide", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

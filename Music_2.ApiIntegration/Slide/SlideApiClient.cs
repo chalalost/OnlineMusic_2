@@ -46,7 +46,7 @@ namespace Music_2.ApiIntegration.Slide
             }
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Url) ? "" : request.Url.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Url) ? "" : request.Url.ToString()), "url");
             var response = await client.PostAsync($"/api/slide/", requestContent);
             return response.IsSuccessStatusCode;
         }

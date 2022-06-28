@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,9 +21,6 @@ using Music_2.Data.Models.User;
 using Music_2.FrontAdmin.Hubs;
 using Music_2.FrontAdmin.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Music_2.FrontAdmin
 {
@@ -52,20 +48,17 @@ namespace Music_2.FrontAdmin
                 {
                     options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/User/Forbiden";
-                    
-                });
-            services.AddAuthorization(options =>
-            {
 
+                });
+            /*services.AddAuthorization(options =>
+            {
                 options.AddPolicy("Admin",
                     authBuilder =>
                     {
                         authBuilder.RequireRole("Admin");
                     });
-
-            });
+            });*/
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
@@ -74,13 +67,11 @@ namespace Music_2.FrontAdmin
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<IFeedBackApiClient, FeedBackApiClient>();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             }
                 );
-
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         }
@@ -101,13 +92,9 @@ namespace Music_2.FrontAdmin
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SignalR>("/signalr");

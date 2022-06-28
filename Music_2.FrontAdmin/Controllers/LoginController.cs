@@ -64,6 +64,31 @@ namespace Music_2.FrontAdmin.Controllers
                 );
             return RedirectToAction("Index", "Home");
         }
+        // GET: User
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.RegisterUser(registerRequest);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Đăng ký thành công";
+                return RedirectToAction("Register");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            return View(registerRequest);
+        }
+
+
+
         private ClaimsPrincipal ValidateToken(string jwtToken)
         {
             IdentityModelEventSource.ShowPII = true;

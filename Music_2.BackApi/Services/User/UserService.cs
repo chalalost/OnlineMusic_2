@@ -26,9 +26,7 @@ namespace Music_2.BackApi.Services.User
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
-        
         private readonly IConfiguration _config;
-
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
@@ -39,8 +37,6 @@ namespace Music_2.BackApi.Services.User
             _roleManager = roleManager;
             _config = config;
         }
-
-        
         public async Task<ApiResult<bool>> Delete(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -51,11 +47,8 @@ namespace Music_2.BackApi.Services.User
             var reult = await _userManager.DeleteAsync(user);
             if (reult.Succeeded)
                 return new ApiSuccessResult<bool>();
-
             return new ApiErrorResult<bool>("Xóa không thành công");
         }
-        
-
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -76,8 +69,6 @@ namespace Music_2.BackApi.Services.User
             };
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
-        
-
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
@@ -86,10 +77,8 @@ namespace Music_2.BackApi.Services.User
                 query = query.Where(x => x.UserName.Contains(request.Keyword)
                  || x.PhoneNumber.Contains(request.Keyword) || x.Email.Contains(request.Keyword) || x.Name.Contains(request.Keyword));
             }
-
             //3. Paging
             int totalRow = await query.CountAsync();
-
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .Select(x => new UserViewModel()
@@ -100,7 +89,6 @@ namespace Music_2.BackApi.Services.User
                     Id = x.Id,
                     Name = x.Name
                 }).ToListAsync();
-
             //4. Select and projection
             var pagedResult = new PagedResult<UserViewModel>()
             {
@@ -111,8 +99,6 @@ namespace Music_2.BackApi.Services.User
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pagedResult);
         }
-        
-
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
             var Email = _userManager.Users.FirstOrDefault(x => x.Email == request.Email);
@@ -142,11 +128,8 @@ namespace Music_2.BackApi.Services.User
             {
                 return new ApiSuccessResult<bool>();
             }
-
             return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
-
-        
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -163,7 +146,6 @@ namespace Music_2.BackApi.Services.User
                 }
             }
             await _userManager.RemoveFromRolesAsync(user, removedRoles);
-
             var addedRoles = request.Roles.Where(x => x.Selected).Select(x => x.Name).ToList();
             foreach (var roleName in addedRoles)
             {
@@ -172,11 +154,8 @@ namespace Music_2.BackApi.Services.User
                     await _userManager.AddToRoleAsync(user, roleName);
                 }
             }
-
             return new ApiSuccessResult<bool>();
         }
-        
-
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
@@ -188,7 +167,6 @@ namespace Music_2.BackApi.Services.User
             user.Email = request.Email;
             user.Name = request.Name;
             user.PhoneNumber = request.PhoneNumber;
-
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
@@ -198,7 +176,6 @@ namespace Music_2.BackApi.Services.User
         }
         public async Task<List<UserViewModel>> GetAll()
         {
-            
             var result = await _userManager.Users.Select(x => new UserViewModel()
             {
                 Id = x.Id,
@@ -208,7 +185,6 @@ namespace Music_2.BackApi.Services.User
                 Email = x.Email,
                 Dob = x.Dob,
             }).ToListAsync();
-
             return result;
         }
         public async Task<ApiResult<string>> TokenForgotPass(InputModel Input)
@@ -227,7 +203,6 @@ namespace Music_2.BackApi.Services.User
             /*token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));*/
             return new ApiSuccessResult<string>(token);
         }
-
         public async Task<ApiResult<bool>> GetResetPasswordConfirm(string email, string token, string newpassword)
         {
             if (email == null || token == null)
