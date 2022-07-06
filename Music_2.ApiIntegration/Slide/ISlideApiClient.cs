@@ -21,5 +21,11 @@ namespace Music_2.ApiIntegration.Slide
         /// </summary>
         /// <returns></returns>
         Task<List<SlideViewModel>> GetAll();
+        /// <summary>
+        /// api xóa slide
+        /// </summary>
+        /// <param name="slideId"></param>
+        /// <returns></returns>
+        Task<bool> Delete(int slideId);
     }
 }

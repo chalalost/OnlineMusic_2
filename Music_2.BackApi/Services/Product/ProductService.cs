@@ -121,7 +121,7 @@ namespace Music_2.BackApi.Services.Product
         public async Task<int> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new OnlineMusicException($"Cannot find a product: {productId}");
+            if (product == null) throw new OnlineMusicException($"Không tìm thấy sản phẩm vs id: {productId}");
 
             var images = _context.ProductImages.Where(i => i.ProductId == productId);
             foreach (var image in images)

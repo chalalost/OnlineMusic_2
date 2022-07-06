@@ -26,6 +26,15 @@ namespace Music_2.FrontAdmin.Controllers
             var data = await _slideApiClient.GetAll();
             return View(data);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] SlideCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -39,6 +48,30 @@ namespace Music_2.FrontAdmin.Controllers
             }
 
             ModelState.AddModelError("", "Thêm slide thất bại");
+            return View(request);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new SlideDeleteRequest()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(SlideDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var result = await _slideApiClient.Delete(request.Id);
+            if (result)
+            {
+                TempData["result"] = "Xóa slide thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Xóa slide không thành công");
             return View(request);
         }
     }

@@ -42,5 +42,14 @@ namespace Music_2.BackApi.Controllers
             var slide = await _slideService.GetAll();
             return Ok(slide);
         }
+
+        [HttpDelete("{slideId}")]
+        public async Task<IActionResult> Delete(int slideId)
+        {
+            var affectedResult = await _slideService.Delete(slideId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
     }
 }

@@ -5,6 +5,7 @@ using Music_2.Data.EF;
 using Music_2.Data.Entities;
 using Music_2.Data.Models;
 using Music_2.Data.Models.Slide;
+using Music_2.Data.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,6 +51,13 @@ namespace Music_2.BackApi.Services.Slide
             }).ToListAsync();
         }
 
+        public async Task<int> Delete(int slideId)
+        {
+            var slide = await _context.Slides.FindAsync(slideId);
+            if (slide == null) throw new OnlineMusicException($"Không tìm thấy slide vs id: {slideId}");
+            _context.Slides.Remove(slide);
+            return await _context.SaveChangesAsync();
+        }
 
         private async Task<string> SaveFile(IFormFile file)
         {

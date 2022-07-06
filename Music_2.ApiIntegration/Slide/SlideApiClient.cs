@@ -50,9 +50,13 @@ namespace Music_2.ApiIntegration.Slide
             var response = await client.PostAsync($"/api/slide/", requestContent);
             return response.IsSuccessStatusCode;
         }
-            public async Task<List<SlideViewModel>> GetAll()
+        public async Task<List<SlideViewModel>> GetAll()
         {
             return await GetListAsync<SlideViewModel>("/api/slide");
+        }
+        public async Task<bool> Delete(int slideId)
+        {
+            return await Delete($"/api/slide/" + slideId);
         }
     }
 }

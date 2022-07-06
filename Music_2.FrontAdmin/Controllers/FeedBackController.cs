@@ -75,7 +75,7 @@ namespace Music_2.FrontAdmin.Controllers
             {
                 builder.AppendLine($"{user.ID},{user.CreateDate},{user.Email},{user.FeedBackContent}");
             }
-            var name = "users";
+            var name = "feedbacks";
             return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{name}.csv");
         }
     }

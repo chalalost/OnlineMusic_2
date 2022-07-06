@@ -99,8 +99,6 @@ namespace Music_2.BackApi.Controllers
             }
             return Ok(result);
         }
-
-        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {

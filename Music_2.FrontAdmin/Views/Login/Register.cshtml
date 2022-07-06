@@ -24,11 +24,7 @@
 
     <!-- Custom styles for this template-->
     <link href="~/admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <script>
-        setTimeout(function () {
-            $('#msgAlert').fadeOut('slow');
-        }, 2000);
-    </script>
+    
 
 </head>
 
@@ -49,12 +45,6 @@
 
                             <form class="user" asp-action="Register" asp-controller="Login" method="post">
                                 <div asp-validation-summary="All" class="text-danger"></div>
-                                @if (ViewBag.SuccessMsg != null)
-                                {
-                                    <div id="msgAlert" class="alert alert-success" role="alert">
-                                        @ViewBag.SuccessMsg
-                                    </div>
-                                }
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input asp-for="Name" class="form-control form-control-user" type="text" placeholder="Name" id="exampleFirstName" />

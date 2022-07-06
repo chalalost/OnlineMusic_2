@@ -80,7 +80,7 @@ namespace Music_2.FrontAdmin.Controllers
             if (result.IsSuccessed)
             {
                 TempData["result"] = "Đăng ký thành công";
-                return RedirectToAction("Register");
+                return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", result.Message);
