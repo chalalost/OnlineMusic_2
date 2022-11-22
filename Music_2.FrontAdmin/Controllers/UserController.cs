@@ -133,20 +133,6 @@ namespace Music_2.FrontAdmin.Controllers
                 Id = id
             });
         }
-        [HttpPost]
-        public async Task<IActionResult> Delete(UserDeleteRequest request)
-        {
-            if (!ModelState.IsValid)
-                return View();
-            var result = await _userApiClient.Delete(request.Id);
-            if (result.IsSuccessed)
-            {
-                TempData["result"] = "Xóa người dùng thành công";
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", result.Message);
-            return View(request);
-        }
 
         [HttpGet]
         public async Task<IActionResult> RoleAssign(Guid id)

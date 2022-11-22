@@ -46,7 +46,7 @@ namespace Music_2.ApiIntegration.User
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.DeleteAsync($"/api/user/delete/{id}");
+            var response = await client.DeleteAsync($"/api/user/{id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);

@@ -113,7 +113,7 @@ namespace Music_2.BackApi.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _userService.Delete(id);

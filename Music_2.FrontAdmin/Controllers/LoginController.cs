@@ -119,6 +119,11 @@ namespace Music_2.FrontAdmin.Controllers
                 // Tìm user theo email gửi đến
                 var kq = await _userApiClient.GetTokenForgotPass(Input);
 
+                /*var callbackUrl = Url.Action(
+                    "/Login/ResetPasswordConfirm",
+                    pageHandler: null,
+                    values: new { email = Input.Email, token = kq.ResultObj },
+                    protocol: Request.Scheme);*/
                 var callbackUrl = Url.Action("ForgotPasswordConfirmation", "Login",
                     new { email = Input.Email, token = kq.ResultObj }, Request.Scheme
                     );
