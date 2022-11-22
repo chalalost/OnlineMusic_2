@@ -36,7 +36,7 @@ namespace Music_2.BackApi.Services.Category
                         LanguageId = request.LanguageId
                     });
                 }
-                /*else
+                else
                 {
                     translations.Add(new CategoryTranslation()
                     {
@@ -46,7 +46,7 @@ namespace Music_2.BackApi.Services.Category
                         SeoAlias = SystemConstants.ProductConstants.NA,
                         LanguageId = language.Id
                     });
-                }*/
+                }
             }
             var cate = new Data.Entities.Category()
             {

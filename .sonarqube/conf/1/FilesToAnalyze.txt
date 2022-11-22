@@ -1,0 +1,17 @@
+﻿F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\BaseApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Category\CategoryApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Category\ICategoryApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\FeedBack\FeedBackApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\FeedBack\IFeedBackApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Language\ILanguageApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Language\LanguageApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Order\IOrderApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Order\OrderApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Product\IProductApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Product\ProductApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Role\IRoleApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Role\RoleApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Slide\ISlideApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\Slide\SlideApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\User\IUserApiClient.cs
+F:\code\Hangdiathoidai\Music_2\Music_2.ApiIntegration\User\UserApiClient.cs
