@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Music_2.BackApi.Services.Role;
 using Music_2.Data.Models;
 using Music_2.Data.Models.Role;
@@ -11,26 +12,29 @@ namespace Music_2.BackApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolesController : ControllerBase
+    [Authorize]
+    public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;
 
-        public RolesController(IRoleService roleService)
+        public RoleController(IRoleService roleService)
         {
             _roleService = roleService;
         }
-        [HttpGet("GetRoles")]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             var roles = await _roleService.GetAllRole();
             return Ok(roles);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreaterRole(RoleRequest request)
         {
             var result = await _roleService.Register(request);
             return Ok();
         }
+
         [HttpDelete]
         public async Task<IActionResult> Remove(RemoveRoleRequest request)
         {

@@ -22,14 +22,12 @@ namespace Music_2.Data.Models
             Errors = modelState.SelectMany(x => x.Value.Errors)  // từ modelState chúng ta lấy ra được cái Errors
                 .Select(x => x.ErrorMessage).ToArray();
         }
-
         public ApiBadRequestResponse(IdentityResult identityResult)
            : base(400)
         {
             Errors = identityResult.Errors
                 .Select(x => x.Code + " - " + x.Description).ToArray();
         }
-
         public ApiBadRequestResponse(string message) // hoặc chuyền thẳng vào message
            : base(400, message)
         {

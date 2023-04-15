@@ -1,0 +1,80 @@
+﻿@model Music_2.Data.Models.UserViewModel
+@{
+    var role = new Music_2.Data.Models.RoleAssignRequest();
+}
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Chi tiết người dùng @Model.UserName</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Dob)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Dob)
+            </dd>
+            @*<dt class="col-sm-2">
+                Role
+            </dt>
+            <dd>
+                <form asp-action="RoleAssign">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    @for (var i = 0; i < role.Roles.Count; i++)
+                    {
+                        <div class="form-group">
+                            <label>
+                                @role.Roles[i].Name
+                                <input type="checkbox" asp-for="@role.Roles[i].Selected" />
+                                <input type="hidden" asp-for="@role.Roles[i].Id" />
+                                <input type="hidden" asp-for="@role.Roles[i].Name" />
+                            </label>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input type="submit" value="  Save  " class="btn btn-success btn-icon-split" />
+                    </div>
+                </form>
+            </dd>*@
+        </dl>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

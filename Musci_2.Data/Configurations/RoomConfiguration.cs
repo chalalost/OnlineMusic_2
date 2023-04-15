@@ -14,9 +14,7 @@ namespace Music_2.Data.Configurations
         public void Configure(EntityTypeBuilder<Room> builder)
         {
             builder.ToTable("Rooms");
-
             builder.Property(s => s.Name).IsRequired().HasMaxLength(100);
-
             builder.HasOne(s => s.Admin)
                 .WithMany(u => u.Rooms)
                 .IsRequired();

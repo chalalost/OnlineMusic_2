@@ -17,7 +17,6 @@ namespace Music_2.ApiIntegration
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
         protected BaseApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
@@ -26,16 +25,14 @@ namespace Music_2.ApiIntegration
             _httpContextAccessor = httpContextAccessor;
             _httpClientFactory = httpClientFactory;
         }
-
         protected async Task<TResponse> GetAsync<TResponse>(string url)
         {
             var sessions = _httpContextAccessor
                 .HttpContext
                 .Session
                 .GetString(SystemConstants.AppSettings.Token);
-
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
@@ -43,12 +40,10 @@ namespace Music_2.ApiIntegration
             {
                 TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
                     typeof(TResponse));
-
                 return myDeserializedObjList;
             }
             return JsonConvert.DeserializeObject<TResponse>(body);
         }
-
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {
             var sessions = _httpContextAccessor
@@ -56,9 +51,8 @@ namespace Music_2.ApiIntegration
                .Session
                .GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
             var response = await client.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
@@ -68,7 +62,6 @@ namespace Music_2.ApiIntegration
             }
             throw new Exception(body);
         }
-
         public async Task<bool> Delete(string url)
         {
             var sessions = _httpContextAccessor
@@ -76,9 +69,8 @@ namespace Music_2.ApiIntegration
                .Session
                .GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
             var response = await client.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {

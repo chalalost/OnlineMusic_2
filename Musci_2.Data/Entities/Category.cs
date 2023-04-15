@@ -8,6 +8,7 @@ namespace Music_2.Data.Entities
     public class Category
     {
         public int Id { set; get; }
+        public string Name { get; set; }
         public int SortOrder { set; get; }
         public bool IsShowOnHome { set; get; }
         public int? ParentId { set; get; }

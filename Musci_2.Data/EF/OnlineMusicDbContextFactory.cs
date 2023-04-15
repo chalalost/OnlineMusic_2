@@ -18,12 +18,9 @@ namespace Music_2.Data.EF
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-
             var connectionString = configuration.GetConnectionString("OnlineMusicDb");
-
             var optionsBuilder = new DbContextOptionsBuilder<OnlineMusicDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
-
             return new OnlineMusicDbContext(optionsBuilder.Options);
         }
     }

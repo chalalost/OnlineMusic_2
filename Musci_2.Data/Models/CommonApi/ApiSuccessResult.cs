@@ -13,7 +13,6 @@ namespace Music_2.Data.Models
             IsSuccessed = true;
             ResultObj = resultObj;
         }
-
         public ApiSuccessResult()
         {
             IsSuccessed = true;

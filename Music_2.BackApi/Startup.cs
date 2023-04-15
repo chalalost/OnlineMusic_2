@@ -20,8 +20,13 @@ using Microsoft.OpenApi.Models;
 using Music_2.BackApi.Services;
 using Music_2.BackApi.Services.Category;
 using Music_2.BackApi.Services.Common;
+using Music_2.BackApi.Services.FeedBack;
+using Music_2.BackApi.Services.Language;
+using Music_2.BackApi.Services.Order;
 using Music_2.BackApi.Services.Product;
 using Music_2.BackApi.Services.Role;
+using Music_2.BackApi.Services.Singer;
+using Music_2.BackApi.Services.Slide;
 using Music_2.BackApi.Services.User;
 using Music_2.Data.EF;
 using Music_2.Data.Entities;
@@ -45,17 +50,12 @@ namespace Music_2.BackApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             //khai bao db tu appsettings
             services.AddDbContext<OnlineMusicDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("OnlineMusicDb")));
             //setup, su dung identity server 4
             services.AddIdentity<AppUser, AppRole>(options => {
-                /*options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireUppercase = false;
-                options.User.RequireUniqueEmail = true;*/
             })
                 .AddEntityFrameworkStores<OnlineMusicDbContext>()
                 .AddDefaultTokenProviders();
@@ -63,7 +63,11 @@ namespace Music_2.BackApi
             {
                 options.TokenLifespan = TimeSpan.FromHours(2);
             });
+            services.AddControllers()
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
+
+            services.AddRazorPages();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MusicVer2", Version = "v1" });
@@ -124,15 +128,7 @@ namespace Music_2.BackApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
-#if DEBUG
-            /*var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (environment == Environments.Development)
-            {
-                build.AddRazorRuntimeCompilation();
-            }*/
-#endif
-
-            services.AddHttpClient();
+            
             //khai bao cac services
             services.AddTransient<IAuthenUserService, AuthenUserService>();
             services.AddTransient<IEmailSender, EmailSender>(); 
@@ -140,12 +136,13 @@ namespace Music_2.BackApi
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IFeedBackService, FeedBackService>();
             services.AddTransient<ICategoryService, CategoryService>();
-            services.AddControllers()
-            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+            services.AddTransient<ISingerService, SingerService>();
+            services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<ISlideService, SlideService>();
 
-
-            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

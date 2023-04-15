@@ -15,13 +15,9 @@ namespace Music_2.Data.Configurations
         {
             builder.ToTable("Carts");
             builder.HasKey(x => x.Id);
-
             builder.Property(x => x.Id).UseIdentityColumn();
-
-
             builder.HasOne(x => x.Product).WithMany(x => x.Carts).HasForeignKey(x => x.ProductId);
             builder.HasOne(x => x.User).WithMany(x => x.Carts).HasForeignKey(x => x.UserId);
-
         }
     }
 }

@@ -33,8 +33,11 @@ namespace Music_2.BackApi.Services
         
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
+            if(request.UserName == null) return new ApiErrorResult<string>("Vui lòng điền tài khoản");
+            if (request.Password == null) return new ApiErrorResult<string>("Vui lòng điền mật khẩu");
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
+            if(request.Password == null) return new ApiErrorResult<string>("Sai mật khẩu");
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, request.RememberMe);
             if (!result.Succeeded)
             {
@@ -44,7 +47,7 @@ namespace Music_2.BackApi.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.FirstName),
+                new Claim(ClaimTypes.GivenName,user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName)
             };

@@ -1,0 +1,85 @@
+﻿@using Music_2.Data.Models.CommonApi
+@model PagedResult<Music_2.Data.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
+<div class="d-sm-flex align-items-center justify-content-between">
+    <button class="btn btn-light" type="button">
+        @Html.ActionLink("Thêm người dùng", "Create")
+    </button>
+    <button class="btn btn-light" type="button">
+        <i class="fas fa-download fa-sm text-white-50"></i>
+        @Html.ActionLink(" Generate Report", "ExportCsv")
+    </button>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <form asp-action="Index" method="get" class="form-inline mr-auto w-100 navbar-search">
+            <div class="input-group">
+                <input name="keyword" type="text" class="form-control bg-light border-0 small" value="@ViewBag.Keyword" placeholder="Search for..."
+                       aria-label="Search" aria-describedby="basic-addon2" style="width:360px">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" onclick="/User/Index" class="btn"> Reset </button>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Tài khoản</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.UserName</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Email</td>
+                            <td>
+                                <a href="/User/Edit?id=@item.Id">Sửa</a>
+                                |
+                                <a href="/User/Details?id=@item.Id">Chi Tiết</a>
+                                |
+                                <a href="/User/RoleAssign?id=@item.Id">Quyền</a>
+                                |
+                                <a href="/User/Delete?id=@item.Id"> Xóa</a>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <center>@await Component.InvokeAsync("Pager", Model)</center>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,6 @@ namespace Music_2.Data.Configurations
         {
             builder.ToTable("Messages");
             builder.Property(s => s.Content).IsRequired().HasMaxLength(500);
-
             builder.HasOne(s => s.ToRoom)
                 .WithMany(m => m.Messages)
                 .HasForeignKey(s => s.ToRoomId)

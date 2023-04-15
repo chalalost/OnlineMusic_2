@@ -11,14 +11,8 @@ namespace Music_2.Data.Entities
     public class FeedBack
     {
         public long ID { get; set; }
-
-        [StringLength(100)]
-        public string CreateDate { get; set; }
-
-        [Column(TypeName = "ntext")]
+        public DateTime CreateDate { get; set; }
         public string FeedBackContent { get; set; }
-
-        [StringLength(100)]
         public string Email { get; set; }
     }
 }

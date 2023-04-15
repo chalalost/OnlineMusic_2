@@ -1,24 +1,22 @@
-﻿using Music_2.Data.EF;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Music_2.BackApi.Services.Common;
+using Music_2.Data.EF;
+using Music_2.Data.Entities;
+using Music_2.Data.Models;
+using Music_2.Data.Models.Catalog.ProductImages;
 using Music_2.Data.Models.Catalog.Products;
 using Music_2.Data.Models.CommonApi;
+using Music_2.Data.Models.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Music_2.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using Music_2.Data.Models.Catalog.ProductImages;
-using System.Net.Http.Headers;
 using System.IO;
-using Microsoft.AspNetCore.Http;
-using Music_2.Data.Models.Utils;
-using Music_2.Data.Entities;
-using ViewModel.Catalog.Products;
-using Music_2.BackApi.Services.Common;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Music_2.BackApi.Services.Product
 {
-
     public class ProductService : IProductService
     {
         private readonly OnlineMusicDbContext _context;
@@ -78,7 +76,7 @@ namespace Music_2.BackApi.Services.Product
                         LanguageId = request.LanguageId
                     });
                 }
-                else
+                /*else
                 {
                     translations.Add(new ProductTranslation()
                     {
@@ -87,11 +85,12 @@ namespace Music_2.BackApi.Services.Product
                         SeoAlias = SystemConstants.ProductConstants.NA,
                         LanguageId = language.Id
                     });
-                }
+                }*/
             }
             var product = new Data.Entities.Product()
             {
                 Price = request.Price,
+                Name = request.Name,
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
@@ -122,7 +121,7 @@ namespace Music_2.BackApi.Services.Product
         public async Task<int> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new Exception($"Cannot find a product: {productId}");
+            if (product == null) throw new OnlineMusicException($"Không tìm thấy sản phẩm vs id: {productId}");
 
             var images = _context.ProductImages.Where(i => i.ProductId == productId);
             foreach (var image in images)
@@ -135,7 +134,7 @@ namespace Music_2.BackApi.Services.Product
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PagedResult<ProductVm>> GetAllPaging(GetManageProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -162,7 +161,7 @@ namespace Music_2.BackApi.Services.Product
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(x => new ProductVm()
+                .Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
@@ -181,7 +180,7 @@ namespace Music_2.BackApi.Services.Product
                 }).ToListAsync();
 
             //4. Select and projection
-            var pagedResult = new PagedResult<ProductVm>()
+            var pagedResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecords = totalRow,
                 PageSize = request.PageSize,
@@ -191,7 +190,7 @@ namespace Music_2.BackApi.Services.Product
             return pagedResult;
         }
 
-        public async Task<ProductVm> GetById(int productId, string languageId)
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
         {
             var product = await _context.Products.FindAsync(productId);
             var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId
@@ -205,7 +204,7 @@ namespace Music_2.BackApi.Services.Product
 
             var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
 
-            var productViewModel = new ProductVm()
+            var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
                 DateCreated = product.DateCreated,
@@ -230,7 +229,7 @@ namespace Music_2.BackApi.Services.Product
         {
             var image = await _context.ProductImages.FindAsync(imageId);
             if (image == null)
-                throw new Exception($"Cannot find an image with id {imageId}");
+                throw new OnlineMusicException($"Cannot find an image with id {imageId}");
 
             var viewModel = new ProductImageViewModel()
             {
@@ -266,7 +265,7 @@ namespace Music_2.BackApi.Services.Product
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
-                throw new Exception($"Cannot find an image with id {imageId}");
+                throw new OnlineMusicException($"Cannot find an image with id {imageId}");
             _context.ProductImages.Remove(productImage);
             return await _context.SaveChangesAsync();
         }
@@ -277,7 +276,7 @@ namespace Music_2.BackApi.Services.Product
             var productTranslations = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id
             && x.LanguageId == request.LanguageId);
 
-            if (product == null || productTranslations == null) throw new Exception($"Cannot find a product with id: {request.Id}");
+            if (product == null || productTranslations == null) throw new OnlineMusicException($"Cannot find a product with id: {request.Id}");
 
             productTranslations.Name = request.Name;
             productTranslations.SeoAlias = request.SeoAlias;
@@ -305,7 +304,7 @@ namespace Music_2.BackApi.Services.Product
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
-                throw new Exception($"Cannot find an image with id {imageId}");
+                throw new OnlineMusicException($"Cannot find an image with id {imageId}");
 
             if (request.ImageFile != null)
             {
@@ -319,7 +318,7 @@ namespace Music_2.BackApi.Services.Product
         public async Task<bool> UpdatePrice(int productId, decimal newPrice)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new Exception($"Cannot find a product with id: {productId}");
+            if (product == null) throw new OnlineMusicException($"Cannot find a product with id: {productId}");
             product.Price = newPrice;
             return await _context.SaveChangesAsync() > 0;
         }
@@ -327,7 +326,7 @@ namespace Music_2.BackApi.Services.Product
         public async Task<bool> UpdateStock(int productId, int addedQuantity)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new Exception($"Cannot find a product with id: {productId}");
+            if (product == null) throw new OnlineMusicException($"Cannot find a product with id: {productId}");
             product.Stock += addedQuantity;
             return await _context.SaveChangesAsync() > 0;
         }
@@ -340,7 +339,7 @@ namespace Music_2.BackApi.Services.Product
             return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
 
-        public async Task<PagedResult<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -359,7 +358,7 @@ namespace Music_2.BackApi.Services.Product
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(x => new ProductVm()
+                .Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
@@ -377,7 +376,7 @@ namespace Music_2.BackApi.Services.Product
                 }).ToListAsync();
 
             //4. Select and projection
-            var pagedResult = new PagedResult<ProductVm>()
+            var pagedResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecords = totalRow,
                 PageSize = request.PageSize,
@@ -416,7 +415,7 @@ namespace Music_2.BackApi.Services.Product
             return new ApiSuccessResult<bool>();
         }
 
-        public async Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take)
+        public async Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -432,7 +431,7 @@ namespace Music_2.BackApi.Services.Product
                         select new { p, pt, pic, pi };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
-                .Select(x => new ProductVm()
+                .Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
@@ -453,7 +452,7 @@ namespace Music_2.BackApi.Services.Product
             return data;
         }
 
-        public async Task<List<ProductVm>> GetLatestProducts(string languageId, int take)
+        public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
         {
             //1. Select join
             var query = from p in _context.Products
@@ -468,7 +467,7 @@ namespace Music_2.BackApi.Services.Product
                         select new { p, pt, pic, pi };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
-                .Select(x => new ProductVm()
+                .Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
@@ -487,12 +486,6 @@ namespace Music_2.BackApi.Services.Product
                 }).ToListAsync();
 
             return data;
-        }
-
-        public async Task<List<Data.Entities.Product>> GetAll()
-        {
-            var result = await _context.Products.ToListAsync();
-            return result;
         }
     }
 }

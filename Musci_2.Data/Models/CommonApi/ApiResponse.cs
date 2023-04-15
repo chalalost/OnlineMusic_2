@@ -12,13 +12,11 @@ namespace Music_2.Data.Models
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; } // mesage hiển thị lỗi gì
-
         public ApiResponse(int statusCode, string message = null)
         {
             StatusCode = statusCode;
             Message = message ?? GetDefaultMessageForStatusCode(statusCode);
         }
-
         private static string GetDefaultMessageForStatusCode(int statusCode)
         {
             // nếu ta không chuyền mesage vào thì cứ theo mã lỗi chyền vào thì nó có các mesage mặc định ở dưới

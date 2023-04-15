@@ -1,0 +1,82 @@
+﻿@using Music_2.Data.Models.CommonApi
+@model PagedResult<Music_2.Data.Models.Catalog.Categories.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
+<div class="d-sm-flex align-items-center justify-content-between">
+    <button class="btn btn-light" type="button">
+        @Html.ActionLink("Thêm danh mục", "Create")
+    </button>
+    <button class="btn btn-light" type="button">
+        <i class="fas fa-download fa-sm text-white-50"></i>
+        @Html.ActionLink(" Generate Report", "ExportCsv")
+    </button>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <form asp-action="Index" method="get" class="form-inline mr-auto w-100 navbar-search">
+            <div class="input-group">
+                <input name="keyword" type="text" class="form-control bg-light border-0 small" value="@ViewBag.Keyword" placeholder="Search for..."
+                       aria-label="Search" aria-describedby="basic-addon2" style="width:360px">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" onclick="/Categories/Index" class="btn"> Reset </button>
+            @await Component.InvokeAsync("Navigation", Model)
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>SeoTitle</th>
+                        <th>SeoDescription</th>
+                        <th>SeoAlias</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.SeoTitle</td>
+                        <td>@item.SeoDescription</td>
+                        <td>@item.SeoAlias</td>
+                        <td>
+                            <a href="/Categories/Edit?id=@item.Id">Sửa</a>
+                            |
+                            <a href="/Categories/Delete?id=@item.Id"> Xóa</a>
+                        </td>
+
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+            <center>@await Component.InvokeAsync("Pager", Model)</center>
+        </div>
+    </div>
+</div>

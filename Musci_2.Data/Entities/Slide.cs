@@ -19,6 +19,7 @@ namespace Music_2.Data.Entities
         public string Image { get; set; }
         public int SortOrder { get; set; }
         public Status Status { set; get; }
+        public List<ProductImage> ProductImages { get; set; }
 
     }
 }
